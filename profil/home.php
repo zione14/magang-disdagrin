@@ -62,7 +62,9 @@
 				  <a href="Pengaduan.php">Sistem Layanan Pengaduan Masyarakat</a>
 				  <a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
 				  <a href="https://oss.go.id/">Sistem Oss(Perizinan Usaha)</a>
-				  <a href="PermohonanTera.php">Sistem Layanan Tera & </a>
+				  <a href="https://ptsp.halal.go.id/">Sihalal</a>
+				  <a href="https://merek.dgip.go.id/">Sertifikat HKI</a>
+				  <a href="https://sppirt.pom.go.id/">Pengajuan S-PIRT dan BPOM</a>
 				</div>
 			</div> 
 
