@@ -61,8 +61,8 @@
 				  <a href="../manajemen-pasar/tabel-hargakonsumen.php">E-Katalog Bahan Pokok Penting (Harga Pasar)</a>
 				  <a href="Pengaduan.php">Sistem Layanan Pengaduan Masyarakat</a>
 				  <a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
-				<a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
-					<a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
+				  <a href="https://oss.go.id/">NIB</a>
+				  <a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
 				</div>
 			</div> 
 
