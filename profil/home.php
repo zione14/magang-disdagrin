@@ -62,7 +62,7 @@
 				  <a href="Pengaduan.php">Sistem Layanan Pengaduan Masyarakat</a>
 				  <a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
 				<a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
-					<a href="PermohonanTera.php">Sistem Layanan Tera & Tera Ulang UTTP</a>
+					<a href="PermohonanTera.php">Sistem Layanan Tera & </a>
 				</div>
 			</div> 
 
