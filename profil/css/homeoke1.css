@@ -1,0 +1,395 @@
+#header{
+    width: 80%;
+    height: 0px;
+	background: #f0f0f0;
+	margin: auto;
+    position: absolute;
+    left: 100; right: 100;
+	padding:0;
+	float: center;
+}
+body {
+    background-image: url("../img/back3.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #464646;
+}
+
+#main_image{
+	position: fixed;
+    top: -35px;
+    right: 20px;
+	background-repeat: no-repeat;
+	float:right;
+
+}
+
+#overlay_koran{
+	float: right;
+	position: fixed;
+    bottom: 15%;
+    right: 10px;
+	background-repeat: no-repeat;
+	transform: scaleX(-1);
+
+}
+
+#overlay_image{
+	position: relative;
+	top: 30px;
+	width: 100%;
+	height: auto;
+}
+#overlay_people1{
+	position: fixed;
+	bottom: 30px;
+	width: 100%;
+	height: auto;
+}
+#overlay_people2{
+	position: fixed;
+	bottom: 10px;
+	width: 100%;
+	height: auto;
+	transform: scaleX(-1);
+}
+#overlay_cycling{
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	height: auto;
+	/* transform: scaleX(-1); */
+}
+#overlay_simoleg{
+	width: 10%;
+	height: 10%;
+	/* transform: scaleX(-1); */
+}
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 17px;    
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.topnav a:hover, .dropdown:hover .dropbtn {
+  background-color: #555;
+  color: white;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child), .dropdown .dropbtn {
+    display: none;
+  }
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .topnav.responsive .dropdown {float: none;}
+  .topnav.responsive .dropdown-content {position: relative;}
+  .topnav.responsive .dropdown .dropbtn {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+.respon{
+position:relative;
+}
+/*floating button*/
+.saudagar1{
+	position:fixed;
+	top:100px;
+	left:100px;
+	width:100px;
+	height:30px;
+	font-weight: bold; 
+	text-align: center; 
+	background-color:#cf0921;
+	color:#FFF;
+	border-radius:5px;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+	margin-top:22px;
+}
+
+ .simoleg{
+            background:red;
+            display: block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 10%;
+            -webkit-border-radius: 10%;
+            text-decoration: none;
+            transition: ease all 0.3s;
+			left: 20%;
+            bottom:100%;
+            
+        }
+    .simoleg:hover{
+	background: yellow;
+	color: black;
+	}
+	  .act-btn{
+            background:red;
+            display: block;
+            width: 170px;
+            height: 30px;
+            line-height: 25px;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5%;
+            -webkit-border-radius: 5%;
+            text-decoration: none;
+            transition: ease all 0.3s;
+            position: fixed;
+			right: 31.2%;
+            top:17%;
+            
+        }
+    .act-btn:hover{	background: yellow;
+	color: black;}
+  .saudagar{
+            background:red;
+            display: block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5%;
+            -webkit-border-radius: 5%;
+            text-decoration: none;
+            transition: ease all 0.3s;
+            position: fixed;
+			left: 4.5%;
+            top:46%;
+            
+        }
+    .saudagar:hover{
+	background: yellow;
+	color: black;
+	}
+	  .epras{
+            background:red;
+            display: block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 10%;
+            -webkit-border-radius: 10%;
+            text-decoration: none;
+            transition: ease all 0.3s;
+            position: fixed;
+			left: 18%;
+            top:46%;
+            
+        }
+    .epras:hover{
+	background: yellow;
+	color: black;
+	}
+	  .indag{
+            background:yellow;
+            display: block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: black;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 10%;
+            -webkit-border-radius: 10%;
+            text-decoration: none;
+            transition: ease all 0.3s;
+            position: fixed;
+			left: 38%;
+            top:50%;
+            
+        }
+    .indag:hover{
+	background: red;
+	color: white;
+	}
+/* nav { */
+  /* width: 100%; */
+  /* margin-top: 10px; */
+  /* background: #fff; */
+  /* padding: 0px 0; */
+  /* box-shadow: 0px 0px 0px #dedede; */
+  /* text-align: center; */
+/* } */
+/* nav ul { */
+  /* list-style: none; */
+  /* text-align: center; */
+/* } */
+/* nav ul li { */
+  /* display: inline-block; */
+/* } */
+/* nav ul li a { */
+  /* display: block; */
+  /* padding: 10px; */
+  /* text-decoration: none; */
+  /* color: #4CAF50; */
+  /* font-size: 14; */
+  /* text-transform: uppercase; */
+  /* margin: 0 5px; */
+/* } */
+/* nav ul li a, */
+/* nav ul li a:after, */
+/* nav ul li a:before { */
+  /* transition: all .2s; */
+/* } */
+/* nav ul li a:hover { */
+  /* color: #555; */
+/* } */
+/* ul { */
+  /* list-style-type: none; */
+  /* padding: 0; */
+  /* overflow: hidden; */
+  /* background-color: #f0f0f0; */
+  /* text-align: center; */
+  /* float: center; */
+/* } */
+
+/* li { */
+  /* float: center; */
+/* } */
+
+/* li a { */
+  /* display: block; */
+  /* color: #4CAF50; */
+  /* text-align: center; */
+  /* padding: 0px; */
+  /* text-decoration: none; */
+/* } */
+
+/* ----------------------------------------------animasi hover----------------------------- */
+/* SHIFT */
+
+/* nav.shift ul li a { */
+  /* position:relative; */
+  /* z-index: 1; */
+/* } */
+/* nav.shift ul li a:hover { */
+  /* color: #91640F; */
+/* } */
+/* nav.shift ul li a:after { */
+  /* display: block; */
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  /* bottom: 0; */
+  /* right: 0; */
+  /* margin: auto; */
+  /* width: 100%; */
+  /* height: 1px; */
+  /* content: '.'; */
+  /* color: transparent; */
+  /* background: #F1C40F; */
+  /* visibility: none; */
+  /* opacity: 0; */
+  /* z-index: -1; */
+/* } */
+/* nav.shift ul li a:hover:after { */
+  /* opacity: 1; */
+  /* visibility: visible; */
+  /* height: 100%; */
+/* } */
+
+
+

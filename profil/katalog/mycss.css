@@ -1,0 +1,37 @@
+body {
+	background-image: url("coba.jpg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+.txt-detail {
+	text-decoration: none;
+	text-transform: uppercase;
+	text-emphasis: initial;
+	font-weight: 800;
+	color: rgb(53, 53, 53);
+	border-radius: 40px;
+	overflow: hidden;
+	transition: .5s;
+	position:relative;
+	display: none;
+}
+.col-centered {
+	float: none;
+	margin: 0 auto;
+}
+.row-header {
+	background: rgba(227, 227, 227, 0.699);
+	padding: 10px;
+	margin: 10px !important;
+	border-radius :10px;
+	
+}
+.og-item {
+	background: #fff6;
+	border-radius: 40px;
+}

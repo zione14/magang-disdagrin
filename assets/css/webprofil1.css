@@ -1,0 +1,206 @@
+#header{
+    width: 80%;
+    height: 0px;
+	background: #f0f0f0;
+	margin: auto;
+    position: absolute;
+    left: 100; right: 100;
+	padding:0;
+	float: center;
+}
+body {
+  /* Location of the image */
+  background-image: url("../img/back2.png");
+  
+  /* Background image is centered vertically and horizontally at all times */
+  background-position: center center;
+  
+  /* Background image doesn't tile */
+  background-repeat: no-repeat;
+  
+  /* Background image is fixed in the viewport so that it doesn't move when 
+     the content's height is greater than the image's height */
+  background-attachment: fixed;
+  
+  /* This is what makes the background image rescale based
+     on the container's size */
+  background-size: cover;
+  
+  /* Set a background color that will be displayed
+     while the background image is loading */
+  background-color: #464646;
+}
+/* .container{ */
+    /* position: relative; */
+    /* width: 100%; */
+    /* height: 100%; */
+	/* background-image: url("../img/city.jpg"); */
+	/* background-position: fill; */
+	/* background-repeat: no-repeat; */
+	/* background-size: cover; */
+	/* bottom:0; */
+/* } */
+#main_image{
+	/* position: fixed; */
+    /* top: 20px; */
+    /* left: 200px; */
+    /* width: 100%; */
+    /* height: 100%; */
+	/* background-image: url("../img/cloud.gif"); */
+	/* background-repeat: no-repeat; */
+	
+	
+	position: fixed;
+    top: -35px;
+    left: 20px;
+	background-repeat: no-repeat;
+
+}
+
+#overlay_koran{
+	float: right;
+	position: fixed;
+    bottom: 15%;
+    right: 10px;
+	background-repeat: no-repeat;
+	transform: scaleX(-1);
+
+}
+
+#overlay_image{
+	position: relative;
+	top: 30px;
+	width: 100%;
+	height: auto;
+}
+#overlay_people1{
+	position: fixed;
+
+	bottom: -30px;
+	width: 100%;
+	height: auto;
+}
+#overlay_people2{
+	position: fixed;
+	bottom: 10px;
+	width: 100%;
+	height: auto;
+	transform: scaleX(-1);
+}
+#overlay_cycling{
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	height: auto;
+	/* transform: scaleX(-1); */
+}
+nav {
+  width: 100%;
+  margin-top: 10px;
+  background: #fff;
+  padding: 0px 0;
+  box-shadow: 0px 0px 0px #dedede;
+  text-align: center;
+}
+nav ul {
+  list-style: none;
+  text-align: center;
+}
+nav ul li {
+  display: inline-block;
+}
+nav ul li a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #4CAF50;
+  font-size: 14;
+  text-transform: uppercase;
+  margin: 0 5px;
+}
+nav ul li a,
+nav ul li a:after,
+nav ul li a:before {
+  transition: all .2s;
+}
+nav ul li a:hover {
+  color: #555;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+  background-color: #f0f0f0;
+  text-align: center;
+  float: center;
+}
+
+li {
+  float: center;
+}
+
+li a {
+  display: block;
+  color: #4CAF50;
+  text-align: center;
+  padding: 0px;
+  text-decoration: none;
+}
+
+/*----------------------------------------------animasi hover-----------------------------*/
+/* SHIFT */
+
+nav.shift ul li a {
+  position:relative;
+  z-index: 1;
+}
+nav.shift ul li a:hover {
+  color: #91640F;
+}
+nav.shift ul li a:after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  height: 1px;
+  content: '.';
+  color: transparent;
+  background: #F1C40F;
+  visibility: none;
+  opacity: 0;
+  z-index: -1;
+}
+nav.shift ul li a:hover:after {
+  opacity: 1;
+  visibility: visible;
+  height: 100%;
+}
+
+/*-----------------------------animasi hover-----------------------------------------------*/
+/* For desktop: */
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class*="container"] {
+    width: 80%;
+  }
+}
+
+
