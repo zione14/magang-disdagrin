@@ -65,6 +65,7 @@
 				  <a href="https://ptsp.halal.go.id/">Sihalal</a>
 				  <a href="https://merek.dgip.go.id/">Sertifikat HKI</a>
 				  <a href="https://sppirt.pom.go.id/">Pengajuan S-PIRT dan BPOM</a>
+				  <a href="https://sppirt.pom.go.id/">Pengajuan S-PIRT dan BPOM</a>
 				</div>
 			</div> 
 
