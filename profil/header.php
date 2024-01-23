@@ -81,9 +81,10 @@
 						  <li><a href="https://ptsp.halal.go.id/">Pendaftaran Sihalal</a></li>
 						  <li><a href="https://merek.dgip.go.id/">Sertifikat HKI</a></li>
 						  <li><a href="https://sppirt.pom.go.id/">Pengajuan S-PIRT dan BPOM</a></li>
-						  <!-- <li><a href="login_distri.php">Login Distributor</a></li> -->
-						  <!--<li><a href="#" onclick="return confirmation()">Sistem Layanan Pembinaan Perusahaan & Industri</a></li>
-						  <li><a href="#" onclick="return confirmation()">Sistem Layanan Fasilitasi Perusahaan & Industri</a></li>-->
+						  <li><a href="pendafyaranPKL.php">Pengajuan Izin Usaha Pedagang Kaki Lima</a></li>
+						  <li><a href="login_distri.php">Login Distributor</a></li>
+						  <li><a href="#" onclick="return confirmation()">Sistem Layanan Pembinaan Perusahaan & Industri</a></li>
+						  <li><a href="#" onclick="return confirmation()">Sistem Layanan Fasilitasi Perusahaan & Industri</a></li>
 						</ul>
 					</li> 
 					<li class="dropdown <?php if(@$Page=='Galeri'){echo 'active';} ?>">
