@@ -7,7 +7,6 @@ include '../library/config.php';
 	$year	 = date('Y');
 	$sql 	 = mysqli_query($koneksi,'SELECT RIGHT(KodeTransaksi,7) AS kode FROM trpermohonan WHERE KodeTransaksi LIKE "%'.$year.'%" ORDER BY KodeTransaksi DESC LIMIT 1');  
 	$num	 = mysqli_num_rows($sql);
-	 
 	if($num <> 0) {
 		$data = mysqli_fetch_array($sql);
 		$kode = $data['kode'] + 1;
