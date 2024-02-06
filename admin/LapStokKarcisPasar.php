@@ -153,7 +153,7 @@ while ($row_p = $res_p->fetch_assoc()) {
 											
 										</tr>
 										<?php
-											$StokRequest[] = $res['StokRequest']; 
+											// $StokRequest[] = $res['StokRequest']; 
 											$i++; 
 											$count++;
 											} 

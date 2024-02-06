@@ -101,7 +101,11 @@ $DateTime=date('Y-m-d H:i:s');
 										// mengatur variabel reload dan sql
 										$reload = "AksesLevel.php?pagination=true";
 										$sql =  "SELECT * FROM accesslevel ORDER BY LevelName ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$stmt = $conn->prepare($sql); 
+										$stmt->execute();
+										$result = $stmt->get_result();
+										$user = $result->fetch_assoc();
+										// $result = mysqli_query($koneksi,$sql);
 										
 										//pagination config start
 										$rpp = 20; // jumlah record per halaman
