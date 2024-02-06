@@ -1,8 +1,11 @@
 <?php
 function jumlahUTTP($koneksi){
 	$Query1 =  "SELECT COUNT(IDTimbangan) From timbanganperson where StatusUTTP='Aktif' and IDPerson != 'PRS-2019-0000000'";
-	$res1   = mysqli_query($koneksi, $Query1);
-	$result1 = mysqli_fetch_array($res1);
+	$res1   = $koneksi->prepare($Query1); 
+	$res1->execute();
+	$result = $res1->get_result();
+	$result1 = $result->fetch_assoc();
+	// $result1 = mysqli_fetch_array($res1);
 	return(number_format($result1[0]));
 	
 }
