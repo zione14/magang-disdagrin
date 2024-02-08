@@ -123,7 +123,10 @@ $display = isset($_GET['d']) ? mysqli_real_escape_string($koneksi,base64_decode(
                                                         ORDER BY p.NamaPasar ASC";  
                                                     }
 
-                                                    $result = mysqli_query($koneksi,$sql);
+                                                    $stmt = $koneksi->prepare($sql);
+                                                    $stmt->execute();
+                                                    $result = $stmt->get_result();
+                                                    // $result = mysqli_query($koneksi,$sql);
                                                     $rpp = 20;
                                                     $page = intval(@$_GET["page"]);
                                                     if($page<=0) $page = 1;  
