@@ -58,8 +58,9 @@
 			$kode_jadi2 = "PRS-".$Tahun."-".$bikin_kode1;
 			//cek apakah sdh ada
 			// $CekData = mysqli_query($koneksi,"SELECT a.NamaPerson, a.IDPerson, b.IDLapak, c.KodePasar FROM mstperson a JOIN lapakperson b ON a.IDPerson = b.IDPerson JOIN mstpasar c ON b.KodePasar=c.KodePasar WHERE a.NamaPerson='$Nama' AND c.KodeBJ='$KodePasar' AND b.QrCode='$NoQr'");
-			$sql2 = "SELECT a.NamaPerson, a.IDPerson, b.IDLapak, c.KodePasar FROM mstperson a JOIN lapakperson b ON a.IDPerson = b.IDPerson JOIN mstpasar c ON b.KodePasar=c.KodePasar WHERE a.NamaPerson='$Nama' AND c.KodeBJ='$KodePasar' AND b.QrCode='$NoQr'";
+			$sql2 = "SELECT a.NamaPerson, a.IDPerson, b.IDLapak, c.KodePasar FROM mstperson a JOIN lapakperson b ON a.IDPerson = b.IDPerson JOIN mstpasar c ON b.KodePasar=c.KodePasar WHERE a.NamaPerson= ? AND c.KodeBJ= ? AND b.QrCode= ? ";
 			$stmt = $koneksi->prepare($sql2);
+			$stmt->bind_param("sss", $Nama, $KodePasar, $NoQr);
 			$stmt->execute();
 			$result = $stmt->get_result();
 			$CekData = $result->fetch_assoc();
@@ -70,8 +71,11 @@
 				//Jika Tidak ada insert :
 				//Data Person
 				// $AddPerson = mysqli_query($koneksi,"INSERT INTO mstperson (IDPerson, NamaPerson, IsPerusahaan, JenisPerson, KlasifikasiUser) VALUES ('$kode_jadi2', '$Nama', '0', '#Pedagang##', 'Perseorangan')");
-				$sql3 = "INSERT INTO mstperson (IDPerson, NamaPerson, IsPerusahaan, JenisPerson, KlasifikasiUser) VALUES ('$kode_jadi2', '$Nama', '0', '#Pedagang##', 'Perseorangan')";
+				$sql3 = "INSERT INTO mstperson (IDPerson, NamaPerson, IsPerusahaan, JenisPerson, KlasifikasiUser) VALUES ('?', '?', '0', '#Pedagang##', 'Perseorangan')";
 				$stmt = $koneksi->prepare($sql3);
+				$kodejadi = $kode_jadi2;
+				$nama = $Nama;
+				$stmt->bind_param("ss", $kodejadi, $nama);
 				$stmt->execute();
 				$result = $stmt->get_result();
 				$AddPerson = $result->fetch_assoc();
@@ -79,8 +83,9 @@
 					
 					//Cek Kode Pasar
 					// $KPasar = mysqli_query($koneksi, "SELECT KodePasar FROM mstpasar WHERE KodeBJ='$KodePasar'");
-					$sql4 = "SELECT KodePasar FROM mstpasar WHERE KodeBJ='$KodePasar'";
+					$sql4 = "SELECT KodePasar FROM mstpasar WHERE KodeBJ= ? ";
 					$stmt = $koneksi->prepare($sql4);
+					$stmt->bind_param("s", $KodePasar);
 					$stmt->execute();
 					$result = $stmt->get_result();
 					$KPasar = $result->fetch_assoc();
@@ -105,16 +110,27 @@
 					$kode_jadi_lapak = "LPK-".$bikin_kode_lapak;
 					$Kode_Pasar;
 					// $AddLapakPasar = mysqli_query($koneksi,"INSERT INTO lapakpasar (KodePasar,BlokLapak,NomorLapak,Retribusi,Keterangan,IDLapak) VALUES ('$Kode_Pasar','','','0','-','$kode_jadi_lapak')");
-					$sql6 = "INSERT INTO lapakpasar (KodePasar,BlokLapak,NomorLapak,Retribusi,Keterangan,IDLapak) VALUES ('$Kode_Pasar','','','0','-','$kode_jadi_lapak')";
+					$sql6 = "INSERT INTO lapakpasar (KodePasar,BlokLapak,NomorLapak,Retribusi,Keterangan,IDLapak) VALUES ('?','','','0','-','?')";
 					$stmt = $koneksi->prepare($sql6);
+					$okegas = $Kode_Pasar;
+					$okeloh = $kode_jadi_lapak;
+					$stmt-bind_param("ss",$okegas, $okeloh);
 					$stmt->execute();
 					$result = $stmt->get_result();
 					$AddLapakPasar = $result->fetch_assoc();
 					if($AddLapakPasar){
 						//insert lapak person
 						// $AddLapakPerson = mysqli_query($koneksi,"INSERT INTO lapakperson (KodePasar,IDLapak,BlokLapak,NomorLapak,NoRekBank,AnRekBank,Keterangan,IDPerson,Retribusi,IsAktif,TglAktif,QrCode,Tagihan) VALUES ('$Kode_Pasar','$kode_jadi_lapak','','','$Norek','-','$Keterangan','$kode_jadi2','0',b'1',NOW(),'$NoQr', '$Tagihan')");
-						$sql7 = "INSERT INTO lapakperson (KodePasar,IDLapak,BlokLapak,NomorLapak,NoRekBank,AnRekBank,Keterangan,IDPerson,Retribusi,IsAktif,TglAktif,QrCode,Tagihan) VALUES ('$Kode_Pasar','$kode_jadi_lapak','','','$Norek','-','$Keterangan','$kode_jadi2','0',b'1',NOW(),'$NoQr', '$Tagihan')";
+						$sql7 = "INSERT INTO lapakperson (KodePasar,IDLapak,BlokLapak,NomorLapak,NoRekBank,AnRekBank,Keterangan,IDPerson,Retribusi,IsAktif,TglAktif,QrCode,Tagihan) VALUES ('?','?','','','?','-','?','?','0',b'1',NOW(),'?', '?')";
 						$stmt = $koneksi->prepare($sql7);
+						$ab = $Kode_Pasar;
+						$ac = $kode_jadi_lapak;
+						$ad = $Norek;
+						$ae = $Keterangan;
+						$af = $kode_jadi2;
+						$ag = $NoQr;
+						$ah = $Tagihan;
+						$stmt->bind_param("ssssssd",$ab,$ac,$ad,$ae,$af, $ag, $ah);
 						$stmt->execute();
 						$result = $stmt->get_result();
 						$AddLapakPerson = $result->fetch_assoc();
@@ -131,8 +147,9 @@
 				$Kode_Lapak = $RowCekData['IDLapak'];		
 				//Update Data Tagihan
 				// $UpdateLapakPerson = mysqli_query($koneksi,"UPDATE lapakperson SET Tagihan = '$Tagihan' WHERE KodePasar = '$Kode_Pasar' AND IDLapak = '$Kode_Lapak' AND IDPerson='$Kode_Person'");
-				$sql8 = "UPDATE lapakperson SET Tagihan = '$Tagihan' WHERE KodePasar = '$Kode_Pasar' AND IDLapak = '$Kode_Lapak' AND IDPerson='$Kode_Person'";
+				$sql8 = "UPDATE lapakperson SET Tagihan = '$Tagihan' WHERE KodePasar = ? AND IDLapak = ? AND IDPerson= ? ";
 				$stmt = $koneksi->prepare($sql8);
+				$stmt->bind_param("ss",$Kode_Pasar, $Kode_Lapak, $Kode_Person);
 				$stmt->execute();
 				$result = $stmt->get_result();
 				$UpdateLapakPerson = $result->fetch_assoc();
