@@ -10,10 +10,19 @@ if(@$_GET['id']!=null){
 	$Sebutan = 'Detail Informasi User';	
 	$Readonly = 'readonly';
 	
-	@$Edit = mysqli_query($koneksi,"SELECT  a.NamaPerson,a.NoRekeningBank,a.AnRekBank,a.AlamatLengkapPerson,a.NIK,a.IsPerusahaan,a.JenisPerson,a.PJPerson,b.NamaPerson as Perusahaan,b.AlamatLengkapPerson as AlamatUsaha,a.IDPerson, (SELECT COUNT(PJPerson) From mstperson Where PJPerson= a.IDPerson) as Jumlah
+	// @$Edit = mysqli_query($koneksi,"SELECT  a.NamaPerson,a.NoRekeningBank,a.AnRekBank,a.AlamatLengkapPerson,a.NIK,a.IsPerusahaan,a.JenisPerson,a.PJPerson,b.NamaPerson as Perusahaan,b.AlamatLengkapPerson as AlamatUsaha,a.IDPerson, (SELECT COUNT(PJPerson) From mstperson Where PJPerson= a.IDPerson) as Jumlah
+	// FROM mstperson a 
+	// LEFT JOIN mstperson b on b.IDPerson=a.PJPerson
+	// WHERE a.IDPerson='".htmlspecialchars(base64_decode($_GET['id']))."'");
+	$sql = "SELECT  a.NamaPerson,a.NoRekeningBank,a.AnRekBank,a.AlamatLengkapPerson,a.NIK,a.IsPerusahaan,a.JenisPerson,a.PJPerson,b.NamaPerson as Perusahaan,b.AlamatLengkapPerson as AlamatUsaha,a.IDPerson, (SELECT COUNT(PJPerson) From mstperson Where PJPerson= a.IDPerson) as Jumlah
 	FROM mstperson a 
 	LEFT JOIN mstperson b on b.IDPerson=a.PJPerson
-	WHERE a.IDPerson='".htmlspecialchars(base64_decode($_GET['id']))."'");
+	WHERE a.IDPerson= ? ";
+	$stmt = $koneksi->prepare($sql);
+	$okeoke = htmlspecialchars(base64_decode($_GET['id']));
+	$stmt->bind_param("s", $okeoke);
+	$stmt->execute();
+	@$Edit = $stmt->get_result();
 	@$RowData = mysqli_fetch_assoc($Edit);
 	@$row = explode("#", $RowData['JenisPerson']);
 }
@@ -139,13 +148,25 @@ if(@$_GET['id']!=null){
 										  </thead>
 										  <tbody>
 											<?php
-												$sql =mysqli_query($koneksi, "SELECT b.NamaTimbangan,d.NamaKelas,e.NamaUkuran,c.JenisTimbangan,f.NamaLokasi,b.IDPerson,b.IDTimbangan 
+												// $sql =mysqli_query($koneksi, "SELECT b.NamaTimbangan,d.NamaKelas,e.NamaUkuran,c.JenisTimbangan,f.NamaLokasi,b.IDPerson,b.IDTimbangan 
+												// FROM timbanganperson b 
+												// join msttimbangan c on c.KodeTimbangan=b.KodeTimbangan 
+												// join kelas d on (b.KodeTimbangan,b.KodeKelas)=(d.KodeTimbangan,d.KodeKelas) 
+												// join detilukuran e on (e.KodeTimbangan,e.KodeKelas,e.KodeUkuran)=(b.KodeTimbangan,b.KodeKelas,b.KodeUkuran) 
+												// join lokasimilikperson f on (b.KodeLokasi,b.IDPerson)=(f.KodeLokasi,f.IDPerson) 
+												// WHERE b.IDPerson= ? GROUP BY b.IDTimbangan");
+												$sql = "SELECT b.NamaTimbangan,d.NamaKelas,e.NamaUkuran,c.JenisTimbangan,f.NamaLokasi,b.IDPerson,b.IDTimbangan 
 												FROM timbanganperson b 
 												join msttimbangan c on c.KodeTimbangan=b.KodeTimbangan 
 												join kelas d on (b.KodeTimbangan,b.KodeKelas)=(d.KodeTimbangan,d.KodeKelas) 
 												join detilukuran e on (e.KodeTimbangan,e.KodeKelas,e.KodeUkuran)=(b.KodeTimbangan,b.KodeKelas,b.KodeUkuran) 
 												join lokasimilikperson f on (b.KodeLokasi,b.IDPerson)=(f.KodeLokasi,f.IDPerson) 
-												WHERE b.IDPerson='".$RowData['IDPerson']."' GROUP BY b.IDTimbangan");
+												WHERE b.IDPerson= ? GROUP BY b.IDTimbangan";
+												$stmt = $koneksi->prepare($sql1);
+												$okeloh = $RowData['IDPerson'];
+												$stmt->bind_param("s", $okeloh);
+												$stmt->execute();
+												$sql = $stmt->get_result();
 												$no_urut = 0;
 												$count = mysqli_num_rows($sql);
 												if($count == null OR $count === 0){
@@ -191,7 +212,13 @@ if(@$_GET['id']!=null){
 										  </thead>
 										  <tbody>
 											<?php
-												$sql =mysqli_query($koneksi, "SELECT a.BlokLapak,a.NomorLapak,a.Retribusi,b.NamaPasar,b.NamaKepalaPasar,a.IDLapak,c.NoRekBank,c.IDPerson,a.KodePasar,c.IsAktif FROM lapakpasar a join mstpasar b on a.KodePasar=b.KodePasar join lapakperson c on (c.IDLapak,c.KodePasar)=(a.IDLapak,a.KodePasar) where c.IDPerson='".$RowData['IDPerson']."' order by b.NamaPasar");
+												// $sql =mysqli_query($koneksi, "SELECT a.BlokLapak,a.NomorLapak,a.Retribusi,b.NamaPasar,b.NamaKepalaPasar,a.IDLapak,c.NoRekBank,c.IDPerson,a.KodePasar,c.IsAktif FROM lapakpasar a join mstpasar b on a.KodePasar=b.KodePasar join lapakperson c on (c.IDLapak,c.KodePasar)=(a.IDLapak,a.KodePasar) where c.IDPerson='".$RowData['IDPerson']."' order by b.NamaPasar");
+												$sql2 = "SELECT a.BlokLapak,a.NomorLapak,a.Retribusi,b.NamaPasar,b.NamaKepalaPasar,a.IDLapak,c.NoRekBank,c.IDPerson,a.KodePasar,c.IsAktif FROM lapakpasar a join mstpasar b on a.KodePasar=b.KodePasar join lapakperson c on (c.IDLapak,c.KodePasar)=(a.IDLapak,a.KodePasar) where c.IDPerson= ? order by b.NamaPasar";
+												$stmt = $koneksi->prepare($sql2);
+												$okegas = $RowData['IDPerson'];
+												$stmt->bind_param("s", $okegas);
+												$stmt->execute();
+												$sql = $stmt->get_result();
 												$no_urut = 0;
 												$count = mysqli_num_rows($sql);
 												if($count == null OR $count === 0){

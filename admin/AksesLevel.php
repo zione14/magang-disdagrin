@@ -101,7 +101,7 @@ $DateTime=date('Y-m-d H:i:s');
 										// mengatur variabel reload dan sql
 										$reload = "AksesLevel.php?pagination=true";
 										$sql =  "SELECT * FROM accesslevel ORDER BY LevelName ASC";
-										$stmt = $conn->prepare($sql); 
+										$stmt = $koneksi->prepare($sql); 
 										$stmt->execute();
 										$result = $stmt->get_result();
 										$user = $result->fetch_assoc();
