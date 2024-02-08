@@ -109,9 +109,8 @@ $Tahun=date('Y');
 										if(@$_REQUEST['keyword']!=null){
 											$sql .= " AND t.TanggalTransaksi LIKE '%".$_REQUEST['keyword']."%'  ";
 										}
-										
 										$sql .=" ORDER BY t.TanggalTransaksi ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$result = mysqli_query($koneksi, $sql);
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
