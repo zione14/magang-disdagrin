@@ -149,7 +149,7 @@
 				// $UpdateLapakPerson = mysqli_query($koneksi,"UPDATE lapakperson SET Tagihan = '$Tagihan' WHERE KodePasar = '$Kode_Pasar' AND IDLapak = '$Kode_Lapak' AND IDPerson='$Kode_Person'");
 				$sql8 = "UPDATE lapakperson SET Tagihan = '$Tagihan' WHERE KodePasar = ? AND IDLapak = ? AND IDPerson= ? ";
 				$stmt = $koneksi->prepare($sql8);
-				$stmt->bind_param("ss",$Kode_Pasar, $Kode_Lapak, $Kode_Person);
+				$stmt->bind_param("sss",$Kode_Pasar, $Kode_Lapak, $Kode_Person);
 				$stmt->execute();
 				$result = $stmt->get_result();
 				$UpdateLapakPerson = $result->fetch_assoc();
