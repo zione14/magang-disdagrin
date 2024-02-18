@@ -152,7 +152,9 @@ $Bulan = date('Y-m');
 								// mengatur variabel reload dan sql
 								$reload = "LapRekapRekapitulasi.php?pagination=true";
 								$sql =  "SELECT Keterangan,TanggalTransaksi FROM `sirkulasipupuk` GROUP by Keterangan DESC";
-								$result = mysqli_query($koneksi,$sql);	
+								$oke = $koneksi->prepare($sql);
+								$oke->execute();								
+								$result = $oke->get_result();	
 													
 								//pagination config start
 								$rpp = 20; // jumlah record per halaman
