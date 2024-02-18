@@ -84,7 +84,10 @@ if(@$_REQUEST['kode']!=null){
 										<select id="KodeKec" name="KodeKec" class="form-control">	
 											<?php
 												echo "<option value=''>--- Kecamatan ---</option>";
-												$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+												$sqla = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan";
+												$oke = $koneksi->prepare($sqla);
+												$oke->execute();
+												$menu = $oke->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 													if($kode['KodeKec']==$_REQUEST['KodeKec']){
 														echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
@@ -97,7 +100,10 @@ if(@$_REQUEST['kode']!=null){
 										<select id="KodeDesa" name="KodeDesa" class="form-control">
 											<option value=''>--- Desa ---</option>
 											<?php
-												$menu = mysqli_query($koneksi,"SELECT * FROM mstdesa WHERE KodeKec='".$_REQUEST['KodeKec']."' ORDER BY NamaDesa");
+												$sqlb = "SELECT * FROM mstdesa WHERE KodeKec='".$_REQUEST['KodeKec']."' ORDER BY NamaDesa";
+												$oke1 = $koneksi->prepare($sqla);
+												$oke1->execute();
+												$menu = $oke1->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 													if($kode['KodeDesa']==$_REQUEST['KodeDesa']){
 														echo "<option value=\"".$kode['KodeDesa']."\" selected>".$kode['NamaDesa']."</option>\n";
@@ -110,7 +116,10 @@ if(@$_REQUEST['kode']!=null){
 										<select  name="kode" class="form-control">
 											<?php
 												echo "<option value=''>--- Timbangan ---</option>";
-												$menu = mysqli_query($koneksi,"SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC");
+												$sqlc = "SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC";
+												$oke2 = $koneksi->prepare($sqlc);
+												$oke2->execute();
+												$menu = $oke2->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 														if($kode['KodeTimbangan'] === $Timbangan){
 															echo "<option value=\"".$kode['KodeTimbangan']."#".$kode['KodeKelas']."#".$kode['KodeUkuran']."\" selected='selected'>".$kode['NamaTimbangan']." ".$kode['NamaKelas']." ".$kode['NamaUkuran']."</option>\n";
@@ -155,7 +164,9 @@ if(@$_REQUEST['kode']!=null){
 									
 									// $sql .=" GROUP by a.KodeTimbangan,a.KodeKelas,a.KodeUkuran ORDER BY c.NamaTimbangan ASC";
 									$sql .="  GROUP by a.KodeTimbangan,a.KodeKelas,a.KodeUkuran,b.KodeKec,b.KodeDesa ORDER BY f.NamaDesa,c.NamaTimbangan ASC";
-									$result = mysqli_query($koneksi,$sql);									
+									$oke3 = $koneksi->prepare($sql);
+									$oke3->execute();
+									$result = $oke3->get_result();									
 									
 									//pagination config start
 									$rpp = 20; // jumlah record per halaman
@@ -248,7 +259,10 @@ if(@$_REQUEST['kode']!=null){
 					<select id="Kode" name="KodeKec" class="form-control" >
 						<?php
 							echo "<option value=''>--- Kecamatan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+							$sqlc = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan";
+							$oke4 = $koneksi->prepare($sqlc);
+							$oke4->execute();
+							$menu = $oke4->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeKec']==$_REQUEST['KodeKec']){
 									echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
@@ -264,7 +278,12 @@ if(@$_REQUEST['kode']!=null){
 					<select id="KodeDes" name="KodeDesa" class="form-control">
 						<option value=''>--- Desa ---</option>
 						<?php
-							$menu = mysqli_query($koneksi,"SELECT * FROM mstdesa WHERE KodeKec='".$_REQUEST['KodeKec']."' ORDER BY NamaDesa");
+							$sqld = "SELECT * FROM mstdesa WHERE KodeKec= ? ORDER BY NamaDesa";
+							$ab = $_REQUEST['KodeKec'];
+							$oke5 = $koneksi->prepare($sqld);
+							$oke5->bind_param('s', $ab);
+							$oke5->execute();
+							$menu = $oke5->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeDesa']==$_REQUEST['KodeDesa']){
 									echo "<option value=\"".$kode['KodeDesa']."\" selected>".$kode['NamaDesa']."</option>\n";
@@ -280,7 +299,10 @@ if(@$_REQUEST['kode']!=null){
 					<select  name="kode" class="form-control">
 						<?php
 							echo "<option value=''>--- Timbangan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC");
+							$sqle = "SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC";
+							$oke6 = $koneksi->prepare($sqle);
+							$oke6->execute();
+							$menu = $oke6->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 									if($kode['KodeTimbangan'] === $Timbangan){
 										echo "<option value=\"".$kode['KodeTimbangan']."#".$kode['KodeKelas']."#".$kode['KodeUkuran']."\" selected='selected'>".$kode['NamaTimbangan']." ".$kode['NamaKelas']." ".$kode['NamaUkuran']."</option>\n";
