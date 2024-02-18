@@ -108,7 +108,9 @@ $BulanTahun = isset($_REQUEST['Bulan']) ? mysqli_real_escape_string($koneksi,$_R
 										) c ON c.KodePasar = a.KodePasar
 										where (date_format(b.TanggalTrans, '%Y-%m') BETWEEN '".$BulanTahun."' AND '".@$BulanTahun."') OR b.TanggalTrans is null  
 										GROUP by a.KodePasar ORDER BY a.NamaPasar ASC";
-										$result = mysqli_query($koneksi,$sql);		
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();										
+										$result = $oke->get_result();		
 										
 										
 										//pagination config start
