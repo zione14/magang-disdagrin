@@ -146,7 +146,9 @@ $BulanTahun = isset($_REQUEST['Bulan']) ? mysqli_real_escape_string($koneksi,$_R
 											GROUP BY l.KodePasar
 										) f ON f.KodePasar = a.KodePasar
 										GROUP by a.KodePasar ORDER BY a.KodePasar ASC";
-										$result = mysqli_query($koneksi,$sql);		
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();										
+										$result = $oke->get_result();		
 										
 										//pagination config start
 										$rpp = 20; // jumlah record per halaman
