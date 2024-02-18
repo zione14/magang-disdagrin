@@ -84,7 +84,11 @@ if(@$_REQUEST['kode']!=null){
 										<select id="KodeKec" name="KodeKec" class="form-control">	
 											<?php
 												echo "<option value=''>--- Semua Kecamatan ---</option>";
-												$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+												$sql1 = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab= ?  ORDER BY NamaKecamatan";
+												$ab = KodeKab($koneksi);
+												$oke = $koneksi->prepare($sql1);
+												$oke->execute();
+												$menu = $oke->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 													if($kode['KodeKec']==$_REQUEST['KodeKec']){
 														echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
@@ -131,7 +135,9 @@ if(@$_REQUEST['kode']!=null){
 									
 									
 									$sql .="  GROUP by a.KodeTimbangan,a.KodeKelas,a.KodeUkuran order by  a.KodeTimbangan,a.KodeKelas,a.KodeUkuran";
-									$result = mysqli_query($koneksi,$sql);									
+									$oke1 = $koneksi->prepare($sql);
+									$oke1->execute();
+									$result = $oke1->get_result();									
 									
 									//pagination config start
 									$rpp = 20; // jumlah record per halaman
@@ -241,7 +247,11 @@ if(@$_REQUEST['kode']!=null){
 					<select id="Kode" name="KodeKec" class="form-control" >
 						<?php
 							echo "<option value=''>--- Semua Kecamatan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+							$sql2 = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab= ?  ORDER BY NamaKecamatan";
+							$ac = KodeKab($koneksi);
+							$oke2 = $koneksi->prepare($sql2);
+							$oke2->execute();
+							$menu = $oke2->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeKec']==$_REQUEST['KodeKec']){
 									echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
