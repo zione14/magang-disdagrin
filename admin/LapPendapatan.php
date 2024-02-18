@@ -101,13 +101,17 @@ $SubPage = 'LapPendapatan';
 											$reload = "LapPendapatan.php?pagination=true";
 											$sql =  "SELECT a.*, b.NamaPerson, 
 											b.AlamatLengkapPerson FROM tractiontimbangan a JOIN mstperson b ON a.IDPerson=b.IDPerson WHERE a.StatusTransaksi='SELESAI' AND a.IsDibayar='1' AND (date_format(a.TglAmbil, '%Y-%m-%d') BETWEEN '".$_REQUEST['Tanggal1']."' AND '".@$_REQUEST['Tanggal2']."') AND b.UserName !='dinas' ORDER BY a.TglTransaksi DESC";
-											$result = mysqli_query($koneksi, $sql);
+											$oke = $koneksi->prepare($sql);
+											$oke->execute();											
+											$result = $oke->get_result();
 										}else{
 											//jika tidak ada pencarian pakai ini
 											$reload = "LapPendapatan.php?pagination=true";
 											@$sql =  "SELECT a.*, b.NamaPerson, 
 											b.AlamatLengkapPerson FROM tractiontimbangan a JOIN mstperson b ON a.IDPerson=b.IDPerson WHERE a.StatusTransaksi='SELESAI' AND a.IsDibayar='1' AND (date_format(a.TglAmbil, '%Y-%m-%d') BETWEEN '".$Day."' AND '".@$Day."')  AND b.UserName !='dinas' ORDER BY a.TglTransaksi DESC";
-											$result = mysqli_query($koneksi, $sql);
+											$oke1 = $koneksi->prepare($sql);
+											$oke1->execute();											
+											$result = $oke1->get_result();
 										}
 										
 										//pagination config start
