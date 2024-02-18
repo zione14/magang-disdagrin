@@ -113,7 +113,9 @@ $Bulan = isset($_REQUEST['Periode']) && $_REQUEST['Periode'] != null ? htmlspeci
 											GROUP by r.KodePasar
 										) AS realisasi ON realisasi.KodePasar = a.KodePasar";
 									$sql .="  GROUP by a.KodePasar order by  a.NamaPasar";
-									$result = mysqli_query($koneksi,$sql);									
+									$oke = $koneksi->prepare($sql);
+									$oke->execute();
+									$result = $oke->get_result();									
 									
 									//pagination config start
 									$rpp = 50; // jumlah record per halaman
