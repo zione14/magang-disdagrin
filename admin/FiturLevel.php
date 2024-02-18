@@ -8,8 +8,15 @@ $Tahun=date('Y');
 $DateTime=date('Y-m-d H:i:s');
 
 if(base64_decode(@$_GET['aksi'])=='NonAktif'){
-	$Hapus = mysqli_query($koneksi,"DELETE FROM fiturlevel WHERE LevelID='".base64_decode($_GET['id'])."' AND FiturID='".base64_decode($_GET['data'])."'");
-	if($Hapus){
+	$Hapus = mysqli_query($koneksi,"DELETE FROM fiturlevel WHERE LevelID= ? AND FiturID= ? ");
+	$ab = base64_decode($_GET['id']);
+	$ac = base64_decode($_GET['data']);
+	$stmt = $koneksi->prepare($hapus);
+	$stmt->bind_param('ss', $ab, $ac);
+	$stmt->execute();
+	$result = $stmt->get_result();
+	$query = $result->fethc_assoc();
+	if($query){
 		InsertLog($koneksi, 'Hapus Data', 'Menghapus Akses Level User '.base64_decode($_GET['nm']), $login_id, '', 'Akses Level');
 		 echo '<script> window.location="FiturLevel.php?id='.$_GET['id'].'&nm='.$_GET['nm'].'"</script>';
 	}else{
@@ -115,7 +122,9 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 									  </thead>
 										<?php
 											$sql =  "SELECT * FROM serverfitur  where Bidang ='Admin Pusat' ORDER BY FiturID ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$restk = $koneksi->prepare($sql);
+											$restk->execute();
+											$result = $restl->get_result();
 											$no_urut = 0;
 												
 										?>
@@ -182,7 +191,9 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 									  </thead>
 										<?php
 											$sql =  "SELECT * FROM serverfitur  where Bidang ='Metrologi' ORDER BY FiturID ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$stmtk = $koneksi->prepare($sql);
+											$stmtk->execute();
+											$result = $stmtk->get_result();
 											$no_urut = 0;
 												
 										?>
@@ -200,8 +211,14 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 												</td>
 												<td align="center">
 													<?php
-														$cek2 = mysqli_query($koneksi,"select * from fiturlevel where LevelID='".base64_decode($_GET['id'])."' AND FiturID='".$data ['FiturID']."'");
-														$res = mysqli_fetch_array($cek2);
+														$cek2 = mysqli_query($koneksi,"select * from fiturlevel where LevelID= ? AND FiturID= ? ");
+														$stmk = $koneksi->prepare($cek2);
+														$ab = base64_decode($_GET['id']);
+														$ac = $data ['FiturID'];
+														$stmk->bind_param('ss', $ac, $ad);
+														$stmk->execute();
+														$result = $stmk->get_result();
+														$res = mysqli_fetch_array($result);
 														$num2 = mysqli_num_rows($cek2);
 														if($num2 == 1 ){
 													?>
@@ -249,7 +266,9 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 									  </thead>
 										<?php
 											$sql =  "SELECT * FROM serverfitur  where Bidang ='Harga Pasar' ORDER BY FiturID ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$stmd = $koneksi->prepare($sql);
+											$stmd->execute();
+											$result = $stmd->get_result();
 											$no_urut = 0;
 												
 										?>
@@ -316,7 +335,9 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 									  </thead>
 										<?php
 											$sql =  "SELECT * FROM serverfitur  where Bidang ='Retribusi Pasar' ORDER BY FiturID ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$stmj = $koneksi->prepare($sql);
+											$stmj->exectute();
+											$result = $stmj->get_result();
 											$no_urut = 0;
 												
 										?>
@@ -383,7 +404,9 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 									  </thead>
 										<?php
 											$sql =  "SELECT * FROM serverfitur  where Bidang ='Pupuk Subsidi' ORDER BY FiturID ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$stmn = $koneksi->prepare($sql);
+											$stmn->execute();
+											$result = $stmn->get_result();
 											$no_urut = 0;
 												
 										?>
@@ -401,9 +424,14 @@ if(base64_decode(@$_GET['aksi'])=='NonAktif'){
 												</td>
 												<td align="center">
 													<?php
-														$cek2 = mysqli_query($koneksi,"select * from fiturlevel where LevelID='".base64_decode($_GET['id'])."' AND FiturID='".$data ['FiturID']."'");
-														$res = mysqli_fetch_array($cek2);
-														$num2 = mysqli_num_rows($cek2);
+														$cek2 = mysqli_query($koneksi,"select * from fiturlevel where LevelID= ? AND FiturID= ? ");
+														$stmr = $koneksi->prepare($cek2);
+														$ab = base64_decode($_GET['id']);
+														$ac = $data ['FiturID'];
+														$stmr->bind_param('ss', $ab, $ac);
+														$stmr->execute();
+														$result = $stmr->get_result();
+														$num2 = mysqli_num_rows($result);
 														if($num2 == 1 ){
 													?>
 														<?php if ($cek_fitur['DeleteData'] =='1'){ ?>
