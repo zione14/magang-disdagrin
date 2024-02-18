@@ -87,8 +87,10 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
 											<!-- <option class="form-control" value="" selected>Semua Pasar</option> -->
 											<?php 
 											$sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-											$res_p = $koneksi->query($sql_p);
-											while ($row_p = $res_p->fetch_assoc()) {
+											$res_p = $koneksi->prepare($sql_p);
+											$res_p->execute();
+											$resk = $res_p->get_result();
+											while ($row_p = $resk->fetch_assoc()) {
 												if(isset($KodePasar) && $KodePasar === $row_p['KodePasar']){
 													echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
 												}else{
@@ -243,11 +245,13 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
 												
 											}
 											
-											$result = mysqli_query($koneksi,$sql);
+											$result = $koneksi->prepare($sql);
+											$result->execute();
+											$resdd = $result->get_result();
 											$rpp = 20;
 											$page = intval(@$_GET["page"]);
 											if($page<=0) $page = 1;  
-											$tcount = mysqli_num_rows($result);
+											$tcount = mysqli_num_rows($resdd);
 											
 											$tpages = ($tcount) ? ceil($tcount/$rpp) : 1;
 											$count = 0;
