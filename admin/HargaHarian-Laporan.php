@@ -16,13 +16,19 @@ $KodePasar = isset($_GET['psr']) ? mysqli_real_escape_string($koneksi,base64_dec
 $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_decode($_GET['brg'])) : '';
 //WHERE Kodepasar = $KodePasar
 
-$sql_p = "SELECT KodePasar,NamaPasar FROM mstpasar Where KodePasar = '$KodePasar'";
-$res_p = $koneksi->query($sql_p);
-$row_pasar = $res_p->fetch_assoc();
+$sql_p = "SELECT KodePasar,NamaPasar FROM mstpasar Where KodePasar = ? ";
+$res_p = $koneksi->prepare($sql_p);
+$res_p->bind_param('s', $KodePasar);
+$res_p->execute();
+$result = $res_p->get_result();
+$row_pasar = $result->fetch_assoc();
 
-$sql_b = "SELECT KodeBarang, NamaBarang FROM mstbarangpokok WHERE KodeBarang = '$KodeBarang'";
-$res_b = $koneksi->query($sql_b);
-$row_barang = $res_b->fetch_assoc();
+$sql_b = "SELECT KodeBarang, NamaBarang FROM mstbarangpokok WHERE KodeBarang = ? ";
+$res_b = $koneksi->prepare($sql_b);
+$res_b->bind_param('s', $KodeBarang);
+$res_b->execute();
+$resid = $res_b->get_result();
+$row_barang = $resid->fetch_assoc();
 
 
 ?>
@@ -105,8 +111,10 @@ $row_barang = $res_b->fetch_assoc();
                                                 <?php 
                                                 
                                                 $sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-                                                $res_p = $koneksi->query($sql_p);
-                                                while ($row_p = $res_p->fetch_assoc()) {
+                                                $res_p = $koneksi->prepare($sql_p);
+                                                $res_p->execute();
+                                                $resuldd = $res_p->get_result();
+                                                while ($row_p = $resuldd->fetch_assoc()) {
                                                     if($KodePasar == $row_p['KodePasar']){
                                                         echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
                                                     }else{
@@ -129,8 +137,10 @@ $row_barang = $res_b->fetch_assoc();
                                                 $sql_b = "SELECT KodeBarang, NamaBarang
                                                     FROM mstbarangpokok 
                                                     WHERE IsAktif = '1'";
-                                                $res_b = $koneksi->query($sql_b);
-                                                while ($row_b = $res_b->fetch_assoc()) {
+                                                $res_b = $koneksi->prepare($sql_b);
+                                                $res_b->execute();
+                                                $resu = $res_b->get_result();
+                                                while ($row_b = $resu->fetch_assoc()) {
                                                     if($KodeBarang == $row_b['KodeBarang']){
                                                         echo '<option class="form-control" value="'.base64_encode($row_b['KodeBarang']).'" selected>'.$row_b['NamaBarang'].'</option>';
                                                     }else{
@@ -187,9 +197,11 @@ $row_barang = $res_b->fetch_assoc();
                                     )
                                     GROUP BY r.Tanggal
                                     ORDER BY r.Tanggal DESC";
-                                    $res_lap = $koneksi->query($sql_lap);
+                                    $res_lap = $koneksi->prepare($sql_lap);
+                                    $res_lap->execute();
+                                    $resii = $res_lap->get_result();
                                     $lap_ = array();
-                                    while ($row_lap = $res_lap->fetch_assoc()) {
+                                    while ($row_lap = $resii->fetch_assoc()) {
                                         array_push($lap_, $row_lap);
                                     }
                                     $label_array = array();
