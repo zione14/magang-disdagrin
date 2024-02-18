@@ -163,7 +163,9 @@ if($Tgl == '01'){
 										<select class="form-control" name="psr">
 											<?php 
 											$sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-											$res_p = $koneksi->query($sql_p);
+											$oke = $koneksi->prepare($sql_p);
+											$oke->execute();											
+											$res_p = $oke->get_result();
 											while ($row_p = $res_p->fetch_assoc()) {
 												if(isset($KodePasar) && $KodePasar === $row_p['KodePasar']){
 													echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
@@ -225,8 +227,9 @@ if($Tgl == '01'){
 												WHERE (b.KodeBarang='BRG-2020-0000003' OR b.KodeBarang='BRG-2020-0000002' OR b.KodeBarang='BRG-2020-0000001' OR b.KodeBarang='BRG-2019-0000026' OR b.KodeBarang='BRG-2019-0000027' OR b.KodeBarang='BRG-2019-0000028' OR b.KodeBarang='BRG-2019-0000009') 
 												GROUP BY b.KodeBarang
 												ORDER BY b.KodeGroup ASC, b.KodeBarang ASC";
-											
-											$result = mysqli_query($koneksi,$sql);
+											$oke1 = $koneksi->prepare($sql);
+											$oke1->execute();
+											$result = $oke1->get_result();
 											$rpp = 20;
 											$page = intval(@$_GET["page"]);
 											if($page<=0) $page = 1;  
