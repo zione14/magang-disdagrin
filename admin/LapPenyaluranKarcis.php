@@ -80,7 +80,10 @@ $Tahun=date('Y');
 								<select name="KodePasar" class="form-control">	
 									<option value="">Semua Pasar</option>
 									<?php
-										$menu = mysqli_query($koneksi,"SELECT * FROM mstpasar");
+										$sql1 = "SELECT * FROM mstpasar";
+										$oke = $koneksi->prepare($sql1);
+										$oke->execute();										
+										$menu = $oke->get_result();
 										while($kode = mysqli_fetch_array($menu)){
 											if($kode['KodePasar']==@$_REQUEST['KodePasar']){
 												echo "<option value=\"".$kode['KodePasar']."\" selected >".$kode['NamaPasar']."</option>\n";
@@ -159,7 +162,9 @@ $Tahun=date('Y');
 										}
 										
 										$sql .=" ORDER BY t.TanggalTransaksi ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke1 = $koneksi->prepare($sql);
+										$oke1->execute();
+										$result = $oke1->get_result();
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
