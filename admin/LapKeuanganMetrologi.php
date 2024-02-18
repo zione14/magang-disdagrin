@@ -112,7 +112,9 @@ $Bulan = isset($_REQUEST['Periode']) && $_REQUEST['Periode'] != null ? htmlspeci
 									
 									
 									$sql .="  GROUP by a.KodeTimbangan,a.KodeKelas,a.KodeUkuran order by  a.KodeTimbangan,a.KodeKelas,a.KodeUkuran";
-									$result = mysqli_query($koneksi,$sql);									
+									$oke = $koneksi->prepare($sql);
+									$oke->execute();
+									$result = $oke->get_result();									
 									
 									//pagination config start
 									$rpp = 50; // jumlah record per halaman
@@ -175,7 +177,9 @@ $Bulan = isset($_REQUEST['Periode']) && $_REQUEST['Periode'] != null ? htmlspeci
 												from trtimbanganitem b
 												Join timbanganperson a on a.IDTimbangan = b.IDTimbangan 
 												where a.KodeTimbangan='".$data['KodeTimbangan']."' and a.KodeKelas='".$data['KodeKelas']."' and a.KodeUkuran='".$data['KodeUkuran']."' and LEFT(b.TanggalTransaksi,7) = '$Bulan' ";
-												$conn  = mysqli_query($koneksi, $query2);
+												$oke = $koneksi->prepare($query2);
+												$oke->execute();
+												$conn  = $oke->get_result();
 												$nums3 = mysqli_num_rows($conn); 
 												echo $nums3;
 											?>
@@ -253,7 +257,12 @@ $Bulan = isset($_REQUEST['Periode']) && $_REQUEST['Periode'] != null ? htmlspeci
 					<select id="Kode" name="KodeKec" class="form-control" >
 						<?php
 							echo "<option value=''>--- Semua Kecamatan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+							$sqlku = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab= ?  ORDER BY NamaKecamatan";
+							$ab = KodeKab($koneksi);
+							$oke1 = $koneksi->prepare($sqlku);
+							$oke1->bind_param('s', $ab);
+							$oke1->execute();
+							$menu = $oke1->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeKec']==$_REQUEST['KodeKec']){
 									echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
