@@ -126,7 +126,9 @@ $Bulan = date('Y-m');
 										where a.IsAktif=b'1'";
 																	
 										$sql .="  Order by NamaBarang ASC";
-										$result = mysqli_query($koneksi,$sql);	
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();	
 															
 										//pagination config start
 										$rpp = 20; // jumlah record per halaman
@@ -243,7 +245,9 @@ $Bulan = date('Y-m');
 		FROM sirkulasipupuk b
 		JOIN mstperson c ON b.IDPerson=c.IDPerson
 		WHERE b.KodeBarang = '$KodeBarang' AND c.ID_Distributor='$IDPerson'  AND b.Keterangan = '$TanggalTransaksi'";
-		$conn = mysqli_query($koneksi, $query);
+		$oke1 = $koneksi->prepare($query);
+		$oke1->execute();
+		$conn = $oke1->get_result();
 		$result = mysqli_fetch_array($conn);
 		$Penerimaan = $result['Penerimaan'];
 		$Penjualan = $result['Penjualan'];
