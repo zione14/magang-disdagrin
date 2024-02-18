@@ -26,7 +26,9 @@ if(@$_REQUEST['kode']!=null){
 }
 
 $sql .="  GROUP by a.IDTimbangan DESC";
-$result = mysqli_query($koneksi,$sql);	
+$oke = $koneksi->prepare($sql);
+$oke->execute();
+$result = $oke->get_result();	
 
 while ($daftar = mysqli_fetch_array($result)) {
 	$HariIni = date("Y-m-d");
@@ -219,7 +221,10 @@ $gl .= ']';
 								<select  name="kode" class="form-control">
 									<?php
 										echo "<option value=''>--- Timbangan ---</option>";
-										$menu = mysqli_query($koneksi,"SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC");
+										$sql1 = "SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC";
+										$oke1 = $koneksi->prepare($sql1);
+										$oke1->execute();
+										$menu = $oke1->get_result();
 										while($kode = mysqli_fetch_array($menu)){
 												if($kode['KodeTimbangan'] === $Timbangan){
 													echo "<option value=\"".$kode['KodeTimbangan']."#".$kode['KodeKelas']."#".$kode['KodeUkuran']."\" selected='selected'>".$kode['NamaTimbangan']." ".$kode['NamaKelas']." ".$kode['NamaUkuran']."</option>\n";
