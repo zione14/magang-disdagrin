@@ -124,7 +124,9 @@ $BulanTahun = isset($_REQUEST['Bulan']) ? mysqli_real_escape_string($koneksi,$_R
 											) d ON d.KodePasar = t.KodePasar AND d.KodeKB=i.KodeKB
 											GROUP by t.KodePasar, i.KodeKB
 											ORDER by t.KodePasar, i.KodeKB";
-										$result = mysqli_query($koneksi,$sql);		
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();		
 										
 										
 										//pagination config start
