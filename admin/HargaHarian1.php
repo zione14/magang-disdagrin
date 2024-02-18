@@ -87,8 +87,10 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
 											<!-- <option class="form-control" value="" selected>Semua Pasar</option> -->
 											<?php 
 											$sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-											$res_p = $koneksi->query($sql_p);
-											while ($row_p = $res_p->fetch_assoc()) {
+											$res_p = $koneksi->prepare($sql_p);
+											$res_p->execute();
+											$resl = $res_p->get_result();
+											while ($row_p = $resl->fetch_assoc()) {
 												if(isset($KodePasar) && $KodePasar === $row_p['KodePasar']){
 													echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
 												}else{
@@ -223,19 +225,21 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
 												ORDER BY b.KodeGroup ASC, b.KodeBarang ASC";
 											}
 											// echo $sql;
-											$result = mysqli_query($koneksi,$sql);
+											$result = $koneksi->prepare($sql);
+											$result->execute();
+											$resmm = $result->get_result();
 											$rpp = 20;
 											$page = intval(@$_GET["page"]);
 											if($page<=0) $page = 1;  
-											$tcount = mysqli_num_rows($result);
+											$tcount = mysqli_num_rows($resmm);
 											$tpages = ($tcount) ? ceil($tcount/$rpp) : 1;
 											$count = 0;
 											$i = ($page-1)*$rpp;
 											$no_urut = ($page-1)*$rpp;
 											$kodegroup = "";
 											while(($count<$rpp) && ($i<$tcount)) {
-												mysqli_data_seek($result,$i);
-												$data = mysqli_fetch_array($result);
+												mysqli_data_seek($resmm,$i);
+												$data = mysqli_fetch_array($resmm);
 												if($kodegroup !== $data['KodeGroup']){
 													echo '<tr style="background:#f7f7f7;"><td width="50px"></td>
 													<td colspan="7"><strong>'.ucwords($data['NamaGroup']).'</strong></td>
