@@ -5,61 +5,105 @@ include '../library/tgl-indo.php';
 //data surat
 function ResultData($Jenis,$Tabel,$koneksi){
 	if ($Tabel=='VerifikasiUser'){
-		$Query = mysqli_query($koneksi,"SELECT IDPerson FROM mstperson where IsVerified=b'0'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT IDPerson FROM mstperson where IsVerified=b'0'";
+    $resa = $koneksi->prepare($Query);
+    $resa->execute();
+    $resb = $resa->get_result();
+		$RowData = mysqli_num_rows($resb);
 		$Data = $RowData;
 	}elseif($Tabel == 'Jumlah Pasar'){
-		$Query = mysqli_query($koneksi,"SELECT KodePasar FROM mstpasar");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT KodePasar FROM mstpasar";
+    $ambil = $koneksi->prepare($Query);
+    $ambil->execute();
+    $resc = $ambil->get_result();
+		$RowData = mysqli_num_rows($resc);
 		$Data = $RowData;
 	}elseif($Tabel == 'Jumlah Lapak'){
-		$Query = mysqli_query($koneksi,"SELECT IDLapak FROM lapakpasar");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT IDLapak FROM lapakpasar";
+    $ambila = $koneksi->prepare($Query);
+    $ambila->execute();
+    $resf = $ambila->get_result();
+		$RowData = mysqli_num_rows($resf);
 		$Data = $RowData;	
 	}elseif($Tabel == 'Lapak Terpakai'){
-		$Query = mysqli_query($koneksi,"SELECT IDLapak FROM lapakperson");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT IDLapak FROM lapakperson";
+    $ambilb = $koneksi->prepare($Query);
+    $ambilb->execute();
+    $resg = $ambilb->get_result();
+		$RowData = mysqli_num_rows($resg);
 		$Data = $RowData;	
 		
 	}elseif($Tabel == 'Lapak Kosong'){
-		$lapak = mysqli_query($koneksi,"SELECT IDLapak FROM lapakpasar");
-		$ada = mysqli_num_rows($lapak);
+		$lapak = "SELECT IDLapak FROM lapakpasar";
+    $ambilc = $koneksi->prepare($lapak);
+    $ambilc->execute();
+    $resh = $ambilc->get_result();
+		$ada = mysqli_num_rows($resh);
 		$tersedia = $ada;	
 		
-		$Query = mysqli_query($koneksi,"SELECT IDLapak FROM lapakperson");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT IDLapak FROM lapakperson";
+    $ambild = $koneksi->prepare($Query);
+    $ambild->execute();
+    $resi = $ambild->get_result();
+		$RowData = mysqli_num_rows($resi);
 		$terpakai = $RowData;	
 		
 		$Data = $tersedia-$terpakai;
 		
 	}elseif($Tabel == 'Penerimaan'){
-		$Query = mysqli_query($koneksi,"SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi='$Jenis'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi= ? ";
+    $ambile = $koneksi->prepare($Query);
+    $ambile->bind_param('s', $Jenis);
+    $ambile->execute();
+    $resj = $ambile->get_result();
+		$RowData = mysqli_num_rows($resj);
 		$Data = $RowData;	
 	}elseif($Tabel == 'Proses'){
-		$Query = mysqli_query($koneksi,"SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi='$Jenis'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi=? ";
+    $ambilf = $koneksi->prepare($Query);
+    $ambilf->bind_param('s', $Jenis);
+    $ambilf->execute();
+    $resk = $ambilf->get_result();
+		$RowData = mysqli_num_rows($resk);
 		$Data = $RowData;	
 		
 	}elseif($Tabel == 'Proses'){
-		$Query = mysqli_query($koneksi,"SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi='$Jenis'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi= ? ";
+    $ambilg = $koneksi->prepare($Query);
+    $ambilg->bind_param('s', $Jenis);
+    $ambilg->execute();
+    $resl = $ambilg->get_result();
+		$RowData = mysqli_num_rows($resl);
 		$Data = $RowData;	
 	}elseif($Tabel == 'Pengambilan'){
-		$Query = mysqli_query($koneksi,"SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi='$Jenis'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi= ? ";
+    $ambilh = $koneksi->prepare($Query);
+    $ambilh->bind_param('s', $Jenis);
+    $ambilh->executez();
+    $resm = $ambilh->get_result();
+		$RowData = mysqli_num_rows($resm);
 		$Data = $RowData;	
 	}elseif($Tabel == 'Pembayaran'){
-		$Query = mysqli_query($koneksi,"SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi='$Jenis' and IsDibayar=b'1'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT NoTransaksi FROM tractiontimbangan where StatusTransaksi= ? and IsDibayar=b'1'";
+    $ambili = $koneksi->prepare($Query);
+    $ambili->bind_param('s', $Jenis);
+    $ambili->execute();
+    $resn = $ambili->get_result();
+		$RowData = mysqli_num_rows($resn);
 		$Data = $RowData;	
 	}elseif($Tabel == 'Distributor'){
-		$Query = mysqli_query($koneksi,"SELECT IDPerson  FROM mstperson WHERE JenisPerson LIKE '%PupukSub%'  AND IsVerified=b'1' and IsPerusahaan=b'1' AND ID_Distributor IS NULL");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT IDPerson  FROM mstperson WHERE JenisPerson LIKE '%PupukSub%'  AND IsVerified=b'1' and IsPerusahaan=b'1' AND ID_Distributor IS NULL";
+    $ambilj = $koneksi->prepare();
+    $ambilj->execute();
+    $reso = $ambilj->get_result();
+		$RowData = mysqli_num_rows($reso);
 		$Data = $RowData;
 	}elseif($Tabel == 'Pupuk'){
-		$Query = mysqli_query($koneksi,"SELECT KodeBarang FROM mstpupuksubsidi WHERE IsAktif=b'1'");
-		$RowData = mysqli_num_rows($Query);
+		$Query = "SELECT KodeBarang FROM mstpupuksubsidi WHERE IsAktif=b'1'";
+    $ambilk = $koneksi->prepare($Query);
+    $ambilk->execute();
+    $resp = $ambilk->get_result();
+		$RowData = mysqli_num_rows($resp);
 		$Data = $RowData;	
 		
 	} 
@@ -288,7 +332,9 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
                                                 <!-- <option class="form-control" value="" selected>Semua Pasar</option> -->
                                                 <?php 
                                                 $sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-                                                $res_p = $koneksi->query($sql_p);
+                                                $oke1 = $koneksi->prepare($sql_p);
+                                                $oke1->execute();
+                                                $res_p = $oke1->get_result();
                                                 while ($row_p = $res_p->fetch_assoc()) {
                                                     if($KodePasar == $row_p['KodePasar']){
                                                         echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
@@ -311,7 +357,9 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
                                                 $sql_b = "SELECT KodeBarang, NamaBarang
                                                     FROM mstbarangpokok 
                                                     WHERE IsAktif = '1'";
-                                                $res_b = $koneksi->query($sql_b);
+                                                $oke2 = $koneksi->pepare($sql_b);
+                                                $oke2->execute();
+                                                $res_b = $oke2->get_result();
                                                 while ($row_b = $res_b->fetch_assoc()) {
                                                     if($KodeBarang == $row_b['KodeBarang']){
                                                         echo '<option class="form-control" value="'.base64_encode($row_b['KodeBarang']).'" selected>'.$row_b['NamaBarang'].'</option>';
@@ -369,7 +417,9 @@ $KodeBarang = isset($_GET['brg']) ? mysqli_real_escape_string($koneksi,base64_de
                                     )
                                     GROUP BY r.Tanggal
                                     ORDER BY r.Tanggal DESC";
-                                    $res_lap = $koneksi->query($sql_lap);
+                                    $oke3 = $koneksi->prepare($sql_lap);
+                                    $oke3->execute();
+                                    $res_lap = $oke3->get_result();
                                     $lap_ = array();
                                     while ($row_lap = $res_lap->fetch_assoc()) {
                                         array_push($lap_, $row_lap);
