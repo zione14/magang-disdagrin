@@ -75,8 +75,11 @@ $SubPage = 'HistoriLapak'.$_GET['k'];
 								<select name="k" id="k" style="display: none" class="form-control">	
 									<option value="">Semua Pasar</option>
 									<?php
-										$menu = mysqli_query($koneksi,"SELECT * FROM mstpasar");
-										while($kode = mysqli_fetch_array($menu)){
+										$menu = "SELECT * FROM mstpasar";
+										$qkk = $koneksi->prepare($menu);
+										$qkk->execute();
+										$resultli = $qkk->get_result();
+										while($kode = mysqli_fetch_array($qkk)){
 											if($kode['KodePasar']==@$KodePasar){
 												echo "<option value=\"".$kode['KodePasar']."\" selected >".$kode['NamaPasar']."</option>\n";
 											}else{
@@ -126,8 +129,9 @@ $SubPage = 'HistoriLapak'.$_GET['k'];
 									
 									
 									$sql .="ORDER BY IDLapak ASC";
-									$result = mysqli_query($koneksi,$sql);									
-									
+									$konekk = $koneksi->prepare($sql);			
+									$konekk->execute();						
+									$result = $konekk->get_result();
 									//pagination config start
 									$rpp = 20; // jumlah record per halaman
 									$page = intval(@$_GET["page"]);
