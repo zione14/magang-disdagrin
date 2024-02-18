@@ -11,10 +11,13 @@ $KodePasar = isset($_GET['psr']) ? mysqli_escape_string($koneksi, base64_decode(
 
 if(isset($_GET['k']) && $_GET['k'] != ''){
 	$KodeBarang = mysqli_escape_string($koneksi, base64_decode($_GET['k']));
-	$sql = "SELECT b.*, g.NamaGroup FROM mstbarangpokok b LEFT JOIN mstgroupbarang g ON g.KodeGroup = b.KodeGroup WHERE KodeBarang = '$KodeBarang'";
-	$res_select = $koneksi->query($sql);
+	$sql = "SELECT b.*, g.NamaGroup FROM mstbarangpokok b LEFT JOIN mstgroupbarang g ON g.KodeGroup = b.KodeGroup WHERE KodeBarang = ? ";
+	$res_select = $koneksi->prepare($sql);
+	$res_select->bind_param('s', $KodeBarang);
+	$res_select->execute();
+	$result = $res_select->get_result();
 	$RowData = array();
-	if($res_select){
+	if($result){
 		if(mysqli_num_rows($res_select) < 1){
 			?>
 			<script type="text/javascript">
@@ -150,8 +153,10 @@ if(isset($_GET['k']) && $_GET['k'] != ''){
 														<option class="form-control" value="" selected>Semua Pasar</option>
 														<?php 
 														$sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-														$res_p = $koneksi->query($sql_p);
-														while ($row_p = $res_p->fetch_assoc()) {
+														$res_p = $koneksi->prepare($sql_p);
+														$res_p->execute();
+														$resultk = $res_p->get_result();
+														while ($row_p = $resultkd->fetch_assoc()) {
 															if($KodePasar === $row_p['KodePasar']){
 																echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
 															}else{
@@ -258,7 +263,9 @@ if(isset($_GET['k']) && $_GET['k'] != ''){
 																	}
 																}
 																// echo $sql;
-																$result = mysqli_query($koneksi,$sql);
+																$stmn = $koneksi->prepare($sql);
+																$stmn->execute();
+																$result = $stmn->get_result();
 																$rpp = 20;
 																$page = intval(@$_GET["page"]);
 																if($page<=0) $page = 1;  
@@ -345,8 +352,10 @@ if(isset($_GET['k']) && $_GET['k'] != ''){
 															<option value="" selected disabled>Pilih Grup</option>
 															<?php 
 															$sql_g = "SELECT * FROM mstgroupbarang ORDER BY NamaGroup ASC";
-															$res_g = $koneksi->query($sql_g);
-															while ($row = mysqli_fetch_assoc($res_g)) {
+															$res_g = $koneksi->prepare($sql_g);
+															$res_g->execute();
+															$resultkk = $res_g->get_result();
+															while ($row = mysqli_fetch_assoc($resultkk)) {
 																if(isset($RowData['KodeGroup']) && $row['KodeGroup'] == $RowData['KodeGroup']){
 																	echo '<option value="'.$row['KodeGroup'].'" selected>'.$row['NamaGroup'].'</option>';
 																}else{
