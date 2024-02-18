@@ -17,10 +17,13 @@ if(isset($_POST)){
 }
 function GetDataKecamatan($conn, $KodeKec, $KodeKab){
 
-	$sql = "SELECT * FROM mstkec WHERE IF(length('$KodeKab') > 0, KodeKab = '$KodeKab', TRUE) ORDER BY NamaKecamatan ASC";
-	$res = $conn->query($sql);
+	$sql = "SELECT * FROM mstkec WHERE IF(length('$KodeKab') > 0, KodeKab = ?, TRUE) ORDER BY NamaKecamatan ASC";
+	$res = $conn->prepare($sql);
+	$res->bind_param('s', $KodeKab);
+	$res->execute();
+	$result = $res->get_result();
 	$Data = '<option value="" selected disabled>Pilih Kecamatan</option>';
-	if($res){
+	if($result){
 		if(mysqli_num_rows($res) > 0){
 			while ($row = $res->fetch_assoc()) {
 				if($KodeKec==$row['KodeKec']){
@@ -36,10 +39,13 @@ function GetDataKecamatan($conn, $KodeKec, $KodeKab){
 
 function GetDataDesa($conn, $KodeDesa, $KodeKec){
 
-	$sql = "SELECT * FROM mstdesa WHERE KodeKec = '$KodeKec' ORDER BY NamaDesa ASC";
-	$res = $conn->query($sql);
+	$sql = "SELECT * FROM mstdesa WHERE KodeKec = ? ORDER BY NamaDesa ASC";
+	$res = $conn->prepare($sql);
+	$res->bind_param('s', $KodeKec);
+	$res->execute();
+	$result = $res->get_result();
 	$Data = '<option value="" selected disabled>Pilih Desa</option>';
-	if($res){
+	if($result){
 		if(mysqli_num_rows($res) > 0){
 			while ($row = $res->fetch_assoc()) {
 				if($KodeDesa==$row['KodeDesa']){
