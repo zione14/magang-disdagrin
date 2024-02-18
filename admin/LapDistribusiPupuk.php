@@ -100,7 +100,10 @@ $Tanggal = date('Y-m');
                                             <select name="dt" class="form-control" required>	
 											<?php
 												echo "<option value='' disable>--- Pilih Distributor ---</option>";
-												$menu = mysqli_query($koneksi,"SELECT IDPerson,NamaPerson FROM mstperson where JenisPerson LIKE '%PupukSub%'  AND IsVerified=b'1' and IsPerusahaan=b'1' AND ID_Distributor IS NULL ORDER BY NamaPerson");
+												$sqla = "SELECT IDPerson,NamaPerson FROM mstperson where JenisPerson LIKE '%PupukSub%'  AND IsVerified=b'1' and IsPerusahaan=b'1' AND ID_Distributor IS NULL ORDER BY NamaPerson";
+												$oke = $koneksi->prepare($sqla);
+												$oke->execute();
+												$menu = $oke->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 													if($kode['IDPerson']==$_REQUEST['dt']){
 														echo "<option value=\"".$kode['IDPerson']."\" selected>".$kode['NamaPerson']."</option>\n";
@@ -117,7 +120,10 @@ $Tanggal = date('Y-m');
                                             <label class="form-control-label">Nama Pupuk Subsidi</label>
                                             <select class="form-control" name="ppk" required>
                                             <?php
-												$menu = mysqli_query($koneksi,"SELECT KodeBarang,NamaBarang from mstpupuksubsidi where IsAktif=b'1' ORDER by NamaBarang ASC");
+												$sqlb = "SELECT KodeBarang,NamaBarang from mstpupuksubsidi where IsAktif=b'1' ORDER by NamaBarang ASC";
+												$oke1 = $koneksi->prepare($sqlb);
+												$oke1->execute();
+												$menu = $oke1->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 													if($kode['KodeBarang'] === $_REQUEST['ppk']){
 														echo "<option value=\"".$kode['KodeBarang']."\" selected='selected'>".$kode['NamaBarang']."</option>\n";
@@ -175,7 +181,9 @@ $Tanggal = date('Y-m');
 													GROUP BY e.KodeBarang
 												) e ON e.KodeBarang = b.KodeBarang 
 												WHERE b.KodeBarang = '$ppk' AND c.ID_Distributor='$dt'  AND b.Keterangan = '$tgl1'";									
-												$result = mysqli_query($koneksi,$sql);
+												$oke2 = $koneksi->prepare($sql);
+												$oke2->execute(); 
+												$result = $oke2->get_result();
 										
 										// pagination config start
 										// $rpp = 30; // jumlah record per halaman
@@ -291,7 +299,9 @@ $Tanggal = date('Y-m');
 					FROM sirkulasipupuk b
 					JOIN mstperson c ON b.IDPerson=c.IDPerson
 					WHERE b.KodeBarang = '$KodeBarang' AND c.ID_Distributor='$login_id'  AND b.Keterangan = '$TanggalKemaren'";
-			$res1   = mysqli_query($koneksi, $Query1);
+			$oke3 = $koneksi->prepare($Query1);
+			$oke3->execute();			
+			$res1   = $oke3->get_result();
 			$result1 = mysqli_fetch_array($res1);
 			@$Sebelumnya = number_format($result1['StokBarang'], 2); 
 			return($Sebelumnya);
