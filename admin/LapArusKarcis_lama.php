@@ -119,7 +119,9 @@ $Tahun=date('Y');
 										}
 										
 										$sql .=" ORDER BY t.TanggalTransaksi ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
