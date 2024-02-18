@@ -69,7 +69,10 @@ $Tahun=date('Y');
 								<select name="KodeKB" class="form-control">	
 									<option value="">Semua Jenis Karcis</option>
 									<?php
-										$menu = mysqli_query($koneksi,"SELECT * FROM mstkertasberharga Where IsAktif=b'1'");
+										$sql1 = "SELECT * FROM mstkertasberharga Where IsAktif=b'1'";
+										$oke = $koneksi->prepare($sql1);
+										$oke->execute();
+										$menu = $oke->get_result();
 										while($kode = mysqli_fetch_array($menu)){
 											if($kode['KodeKB']==@$_REQUEST['KodeKB']){
 												echo "<option value=\"".$kode['KodeKB']."\" selected >".$kode['NamaKB']."</option>\n";
@@ -127,7 +130,9 @@ $Tahun=date('Y');
 										}
 										
 										$sql .=" ORDER BY t.TanggalTransaksi ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke1 = $koneksi->prepare($sql);
+										$oke1->execute();
+										$result = $oke1->get_result();
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
