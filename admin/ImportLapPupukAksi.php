@@ -4,13 +4,15 @@ include '../library/PHPExcel.php';
 
 @$Keterangan	= htmlspecialchars($_POST['Keterangan']);
 
-$periode = "SELECT 	NoTransaksi FROM sirkulasipupuk WHERE Keterangan = '$Keterangan'";
-$count  = mysqli_query($koneksi, $periode);
+$periode = "SELECT 	NoTransaksi FROM sirkulasipupuk WHERE Keterangan = ? ";
+$count  = $koneksi->prepare($periode);
+$count->bind_param('s', $Keterangan);
+$count->execute();
+$result = $count->get_result();
 
 
 
-
-if(mysqli_num_rows($count) > 1){
+if(mysqli_num_rows($result) > 1){
 	header("Location: ImportLapPupuk.php?d=1");
 	die();
 
@@ -149,7 +151,9 @@ function CekKecamatan($conn, $nama){
 		}
 
 		$sql = "SELECT * FROM mstkec WHERE REPLACE(NamaKecamatan, ' ', '') LIKE REPLACE('%$nama%', ' ', '')  AND KodeKab = '3517'";
-		$res = mysqli_query($conn, $sql);
+		$kook = $conn->prepare($sql);
+		$kook->execute();
+		$res = $kook->get_result();
 		if($res){
 			if(mysqli_num_rows($res) > 0){
 				$row = mysqli_fetch_assoc($res);
@@ -166,9 +170,12 @@ function CekKecamatan($conn, $nama){
 		if (strpos($nama, 'JUMLAH KEC.') !== false){
 			
 		}else{
-			$sql = "SELECT * FROM mstperson WHERE NamaPerson = '$nama' and KodeKec='$kodekecamatan'";
+			$sql = "SELECT * FROM mstperson WHERE NamaPerson = ? and KodeKec= ? ";
 			// $sql = "SELECT * FROM mstperson WHERE NamaPerson = '$nama' and ID_Distributor=$pjperson and KodeKec='$kodekecamatan' ";
-			$res = mysqli_query($conn, $sql);
+			$kita = $conn->prepare($sql);
+			$kita->bind_param('ss', $nama, $kodekecamatan);
+			$kita->execute();
+			$res = $kita->get_result();
 			if($res){
 				if(mysqli_num_rows($res) < 1){
 					$IDPerson = GetIdPerson($conn);
@@ -183,7 +190,9 @@ function CekKecamatan($conn, $nama){
 					$KlasifikasiUser = $isperusahaan > 0 ? 'Perusahaan' : 'Perorangan';
 					$PJPerson = $pjperson;
 					$sql_in = "INSERT INTO mstperson (IDPerson, NamaPerson, JenisPerson, IsPerusahaan, KodeKec, KodeKab, UserName, Password, IsVerified, KlasifikasiUser, ID_Distributor) VALUES ('$IDPerson','$NamaPerson','$JenisPerson','$IsPerusahaan','$KodeKec','$KodeKab','$UserName','$Password','$IsVerified','$KlasifikasiUser', IF(length('$PJPerson')>0, '$PJPerson', NULL))";
-					$res1 = mysqli_query($conn, $sql_in);
+					$ilam = $conn->prepare($sql_in);
+					$ilam->execute();
+					$res1 = $ilam->get_result();
 					if($res1){
 						return $IDPerson;
 					}else{
@@ -206,7 +215,9 @@ function CekKecamatan($conn, $nama){
 				$KlasifikasiUser = $isperusahaan > 0 ? 'Perusahaan' : 'Perorangan';
 				$PJPerson = $pjperson;
 				$sql_in = "INSERT INTO mstperson (IDPerson, NamaPerson, JenisPerson, IsPerusahaan, KodeKec, KodeKab, UserName, Password, IsVerified, KlasifikasiUser, ID_Distributor) VALUES ('$IDPerson','$NamaPerson','$JenisPerson','$IsPerusahaan','$KodeKec','$KodeKab','$UserName','$Password','$IsVerified','$KlasifikasiUser', IF(length('$PJPerson')>0, '$PJPerson', NULL))";
-				$res1 = mysqli_query($conn, $sql_in);
+				$lila = $conn->prepare($sql_in);
+				$lila->execute();
+				$res1 = $lila->get_result();
 				if($res1){
 					return $IDPerson;
 				}else{
@@ -219,10 +230,12 @@ function CekKecamatan($conn, $nama){
 
 	function GetIdPerson($conn){
 		$Tahun = date('Y');
-		$sql1 = mysqli_query($conn, 'SELECT RIGHT(IDPerson,7) AS kode1 FROM mstperson ORDER BY IDPerson DESC LIMIT 1');  
-		$num1 = mysqli_num_rows($sql1);
+		$sql1 = 'SELECT RIGHT(IDPerson,7) AS kode1 FROM mstperson ORDER BY IDPerson DESC LIMIT 1'; 
+		$jola = $conn->prepare($sql1);
+		$jola->execute(); 
+		$num1 = $jola->get_result();
 		if($num1 <> 0){
-			$data1 = mysqli_fetch_array($sql1);
+			$data1 = mysqli_fetch_array($jola);
 			$kode1 = $data1['kode1'] + 1;
 		}else{
 			$kode1 = 1;
@@ -233,8 +246,12 @@ function CekKecamatan($conn, $nama){
 
 	function InsertSirkulasi($conn, $IDPerson, $KodeBarang, $JumlahMasuk, $JumlahKeluar, $Keterangan){	
 		$NoTransaksi = NoTransaksi($conn);
-		$sql = mysqli_query($conn, ("SELECT Harga FROM mstpupuksubsidi WHERE KodeBarang = '$KodeBarang'"));
-		$res = mysqli_fetch_array($sql);
+		$sql = "SELECT Harga FROM mstpupuksubsidi WHERE KodeBarang = ? ";
+		$okegas = $conn->prepare($sql);
+		$okegas->bind_param('s', $KodeBarang);
+		$okegas->execute();
+		$resultkk = $okegas->get_result();
+		$res = mysqli_fetch_array($resultkk);
 		$HargaSatuan = $res[0];
 		if($JumlahMasuk != ''){
 			// $NilaiTransaksi = $HargaSatuan * $JumlahMasuk;
