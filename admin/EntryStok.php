@@ -80,9 +80,12 @@ $row_mp = $res_mp->fetch_assoc();
 //Data Stok
 $data_stok = array();
 
-$sql_stok = "SELECT * FROM stokpedagang WHERE Periode='$Periode' AND KodePasar='$KodePasar' AND KodeBarang='$KodeBarang' ORDER BY NoUrut ASC";
-$res_stok = $koneksi->query($sql_stok);
-while ($row_stok = $res_stok->fetch_assoc()) {
+$sql_stok = "SELECT * FROM stokpedagang WHERE Periode= ? AND KodePasar= ? AND KodeBarang= ? ORDER BY NoUrut ASC";
+$res_stok = $koneksi->prepare($sql_stok);
+$res_stok->bind_param("sss", $Periode, $KodePasar, $KodeBarang);
+$res_stok->execute();
+$result = $res_stok->get_result();
+while ($row_stok = $result->fetch_assoc()) {
     array_push($data_stok, $row_stok);
 }
 
@@ -369,10 +372,12 @@ if(isset($_POST['btn-simpan'])){
 
     $Periode = $Tahun.'-'.$Bulan.'-'.$Tanggal;
 
-    $sql_stok = "SELECT * FROM stokpedagang WHERE Periode='$Periode' AND KodePasar='$KodePasar' AND KodeBarang='$KodeBarang'";
-    $res_stok = mysqli_query($koneksi, $sql_stok);
-    $row_stok = mysqli_num_rows($res_stok);
-        
+    $sql_stok = "SELECT * FROM stokpedagang WHERE Periode= ? AND KodePasar= ? AND KodeBarang= ? ";
+    $rest = $koneksi->prepare($sql_stok);
+    $rest->bind_parm('sss', $Periode, $KodePasar, $KodeBarang);
+    $rest->execute();
+    $resultku = $rest->get_result();
+    $row_stok = mysqli_num_rows($resultku);
     if($row_stok > 0) :
       
         for ($i=0; $i < sizeof($_POST['Stok']); $i++) {
