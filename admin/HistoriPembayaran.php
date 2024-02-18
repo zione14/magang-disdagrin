@@ -74,7 +74,10 @@ $SubPage = 'HistoriPembayaran'.$_GET['k'];
 										<div class="col-lg-12 form-group input-group">
 											<select name="k" id="k" class="form-control" style="display: none">	
 												<?php
-													$menu = mysqli_query($koneksi,"SELECT * FROM mstpasar");
+													$aku = "SELECT * FROM mstpasar";
+													$result = $koneksi->prepare($aku);
+													$result->execute();
+													$menu = $result->get_result();
 													while($kode = mysqli_fetch_array($menu)){
 														if($kode['KodePasar']==@$KodePasar){
 															echo "<option value=\"".base64_encode($kode['KodePasar'])."\" selected >".$kode['NamaPasar']."</option>\n";
@@ -140,8 +143,9 @@ $SubPage = 'HistoriPembayaran'.$_GET['k'];
 											}
 										
 										$sql .="  ORDER BY a.TanggalTrans DESC";
-										$result = mysqli_query($koneksi,$sql);	
-										
+										$iyaa = $koneksi->prepare($sql);	
+										$iyaa->execute();
+										$result = $iyaa->get_result();
 										//pagination config start
 										$rpp = 20; // jumlah record per halaman
 										$page = intval(@$_GET["page"]);
