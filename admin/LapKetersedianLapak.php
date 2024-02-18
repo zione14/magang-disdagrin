@@ -79,7 +79,10 @@ $SubPage = 'LapKetersedianLapak';
 											<select name="KodePasar" class="form-control">	
 												<option value="">Semua Pasar</option>
 												<?php
-													$menu = mysqli_query($koneksi,"SELECT * FROM mstpasar");
+													$sql1 = "SELECT * FROM mstpasar";
+													$oke = $koneksi->prepare($sql1);
+													$oke->execute();													
+													$menu = $oke->get_result();
 													while($kode = mysqli_fetch_array($menu)){
 														if($kode['KodePasar']==@$_REQUEST['KodePasar']){
 															echo "<option value=\"".$kode['KodePasar']."\" selected >".$kode['NamaPasar']."</option>\n";
@@ -138,7 +141,9 @@ $SubPage = 'LapKetersedianLapak';
 									
 									
 									$sql .="ORDER BY IDLapak ASC";
-									$result = mysqli_query($koneksi,$sql);									
+									$oke1 = $koneksi->prepare($sql);
+									$oke1->execute();
+									$result = $oke1->get_result();									
 									
 									//pagination config start
 									$rpp = 20; // jumlah record per halaman
@@ -211,7 +216,11 @@ $SubPage = 'LapKetersedianLapak';
 					<select id="Kode" name="KodeKec" class="form-control" >
 						<?php
 							echo "<option value=''>--- Semua Kecamatan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+							$sql2 = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab= ?  ORDER BY NamaKecamatan";
+							$ab = KodeKab($koneksi);
+							$oke2 = $koneksi->prepare($sql2);
+							$oke2->bind_param('s', $ab);
+							$menu = $oke2->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeKec']==$_REQUEST['KodeKec']){
 									echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
