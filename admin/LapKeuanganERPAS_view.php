@@ -111,7 +111,9 @@ $BulanIndo = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli
 										JOIN mstperson d on a.IDPerson=d.IDPerson WHERE LEFT(a.TanggalTrans,7) = '$Bulan' and a.KodePasar= '$KodePasar'";
 										
 										$sql .=" ORDER BY a.TanggalTrans DESC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();
 										
 										//pagination config start
 										$rpp = 20; // jumlah record per halaman
