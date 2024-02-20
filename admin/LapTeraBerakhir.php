@@ -113,7 +113,9 @@ $SubPage = 'LapTeraBerakhir';
 									WHERE b.KodeKab='".KodeKab($koneksi)."' AND h.UserName !='dinas' and g.StatusTransaksi='SELESAI'";
 									
 									$sql .="  GROUP by f.IDTimbangan DESC";
-									$result = mysqli_query($koneksi,$sql);									
+									$oke = $koneksi->prepare($sql);
+									$oke->execute();									
+									$result = $oke->get_result();									
 									
 									//pagination config start
 									$rpp = 20; // jumlah record per halaman
@@ -294,7 +296,12 @@ $SubPage = 'LapTeraBerakhir';
 					<select id="Kode" name="KodeKec" class="form-control" >
 						<?php
 							echo "<option value=''>--- Kecamatan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab='".KodeKab($koneksi)."'  ORDER BY NamaKecamatan");
+							$sqla = "SELECT KodeKec,NamaKecamatan FROM mstkec where KodeKab= ?  ORDER BY NamaKecamatan";
+							$ab = KodeKab($koneksi);
+							$oke1 = $koneksi->prepare($sqla);
+							$oke1->bind_param('s', $ab);
+							$oke1->execute();
+							$menu = $oke1->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeKec']==$_REQUEST['KodeKec']){
 									echo "<option value=\"".$kode['KodeKec']."\" selected>".$kode['NamaKecamatan']."</option>\n";
@@ -310,7 +317,12 @@ $SubPage = 'LapTeraBerakhir';
 					<select id="KodeDes" name="KodeDesa" class="form-control">
 						<option value=''>--- Desa ---</option>
 						<?php
-							$menu = mysqli_query($koneksi,"SELECT * FROM mstdesa WHERE KodeKec='".$_REQUEST['KodeKec']."' ORDER BY NamaDesa");
+							$sqlb = "SELECT * FROM mstdesa WHERE KodeKec= ? ORDER BY NamaDesa";
+							$ac = $_REQUEST['KodeKec'];
+							$oke2 = $koneksi->prepare($sqlb);
+							$oke2->bind_param($ac);
+							$oke2->execute();
+							$menu = $oke2->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 								if($kode['KodeDesa']==$_REQUEST['KodeDesa']){
 									echo "<option value=\"".$kode['KodeDesa']."\" selected>".$kode['NamaDesa']."</option>\n";
@@ -326,7 +338,10 @@ $SubPage = 'LapTeraBerakhir';
 					<select  name="kode" class="form-control">
 						<?php
 							echo "<option value=''>--- Timbangan ---</option>";
-							$menu = mysqli_query($koneksi,"SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC");
+							$sqlc = "SELECT a.KodeTimbangan,b.KodeKelas,c.KodeUkuran,a.NamaTimbangan,b.NamaKelas,c.NamaUkuran FROM msttimbangan a LEFT JOIN kelas b on a.KodeTimbangan=b.KodeTimbangan Join detilukuran c on (b.KodeTimbangan,b.KodeKelas)=(c.KodeTimbangan,c.KodeKelas) ORDER by a.NamaTimbangan ASC";
+							$oke3 = $koneksi->prepare($sqlc);
+							$oke3->execute();
+							$menu = $oke3->get_result();
 							while($kode = mysqli_fetch_array($menu)){
 									if($kode['KodeTimbangan'] === $Timbangan){
 										echo "<option value=\"".$kode['KodeTimbangan']."#".$kode['KodeKelas']."#".$kode['KodeUkuran']."\" selected='selected'>".$kode['NamaTimbangan']." ".$kode['NamaKelas']." ".$kode['NamaUkuran']."</option>\n";
