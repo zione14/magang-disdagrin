@@ -115,7 +115,9 @@ $NamaPasar = htmlspecialchars(base64_decode($_GET['n']));
                                                 <!-- <option class="form-control" value="" selected>Semua Pasar</option> -->
                                                 <?php 
                                                 $sql_p = "SELECT * FROM mstpasar ORDER BY NamaPasar ASC";
-                                                $res_p = $koneksi->query($sql_p);
+                                                $oke = $koneksi->prepare($sql_p);
+                                                $oke->execute();
+                                                $res_p = $oke->get_result();
                                                 while ($row_p = $res_p->fetch_assoc()) {
                                                     if($KodePasar == $row_p['KodePasar']){
                                                         echo '<option class="form-control" value="'.base64_encode($row_p['KodePasar']).'" selected>'.$row_p['NamaPasar'].'</option>';
@@ -138,7 +140,9 @@ $NamaPasar = htmlspecialchars(base64_decode($_GET['n']));
                                                 $sql_b = "SELECT KodeBarang, NamaBarang
                                                     FROM mstbarangpokok 
                                                     WHERE IsAktif = '1'";
-                                                $res_b = $koneksi->query($sql_b);
+                                                $oke1 = $koneksi->prepare($sql_b);
+                                                $oke1->execute();
+                                                $res_b = $oke1->get_result();
                                                 while ($row_b = $res_b->fetch_assoc()) {
                                                     if($KodeBarang == $row_b['KodeBarang']){
                                                         echo '<option class="form-control" value="'.base64_encode($row_b['KodeBarang']).'" selected>'.$row_b['NamaBarang'].'</option>';
@@ -196,7 +200,9 @@ $NamaPasar = htmlspecialchars(base64_decode($_GET['n']));
                                     )
                                     GROUP BY r.Tanggal
                                     ORDER BY r.Tanggal DESC";
-                                    $res_lap = $koneksi->query($sql_lap);
+                                    $oke2 = $koneksi->prepare($sql_lap);
+                                    $oke2->execute();
+                                    $res_lap = $oke2->get_result();
                                     $lap_ = array();
                                     while ($row_lap = $res_lap->fetch_assoc()) {
                                         array_push($lap_, $row_lap);
