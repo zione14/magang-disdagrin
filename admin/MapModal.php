@@ -27,7 +27,9 @@
 		WHERE d.JenisDokumen='FOTO'
 	) d ON d.KodePasar = l.KodePasar AND d.IDLapak = l.IDLapak
 	WHERE l.KodePasar='$KodePasar' AND l.IDLapak='$KodeLapak' ORDER BY IDLapak ASC";
-	$res_lapakpr = $koneksi->query($sql_lapakpr);
+	$oke = $koneksi->prepare($sql_lapakpr);
+	$oke->execute();
+	$res_lapakpr = $oke->get_result();
 	$row_lapakpr = $res_lapakpr->fetch_assoc();
 	$blok = str_replace(" ", "", $row_lapakpr['BlokLapak']);
 	if($NamaPasar == 'CitraNiaga'){
