@@ -19,7 +19,9 @@ FROM trretribusipasar t
 WHERE DATE_FORMAT(t.TanggalTrans, '%Y-%m-%d') = CURDATE() 
 ) c ON c.KodePasar = l.KodePasar AND c.IDLapak = l.IDLapak
 WHERE l.KodePasar='$KodePasar' ORDER BY IDLapak ASC";
-$res_lapak = $koneksi->query($sql_lapak);
+$oke = $koneksi->query($sql_lapak);
+$oke->execute();
+$res_lapak = $oke->get_result();
 $data_lapak = array();
 while ($row_lapak = $res_lapak->fetch_assoc()) {
  array_push($data_lapak, $row_lapak);
