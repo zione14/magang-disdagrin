@@ -96,7 +96,9 @@ $Tahun=date('Y');
 										) d ON d.KodeKB=k.KodeKB
 										WHERE k.IsAktif=b'1'
 										ORDER BY k.KodeKB ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
