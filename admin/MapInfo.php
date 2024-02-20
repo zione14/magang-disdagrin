@@ -31,7 +31,9 @@ $sql_lapakpr = "SELECT l.IDLapak, l.BlokLapak, l.NomorLapak, l.Keterangan, l.Ret
     WHERE d.JenisDokumen='FOTO'
   ) d ON d.KodePasar = l.KodePasar AND d.IDLapak = l.IDLapak
   WHERE l.KodePasar='$KodePasar' AND l.IDLapak='$IDLapak' ORDER BY IDLapak ASC";
-  $res_lapakpr = $koneksi->query($sql_lapakpr);
+  $oke = $koneksi->prepare($sql_lapakpr);
+  $oke->execute();
+  $res_lapakpr = $oke->get_result();
   $row_lapakpr = $res_lapakpr->fetch_assoc();
   $blok = str_replace(" ", "", $row_lapakpr['BlokLapak']);
 	if($NamaPasar == 'CitraNiaga'){
@@ -229,7 +231,9 @@ $sql_lapakpr = "SELECT l.IDLapak, l.BlokLapak, l.NomorLapak, l.Keterangan, l.Ret
                                         }
                                         
                                         $sql .="  ORDER BY a.TanggalTrans DESC";
-                                        $result = mysqli_query($koneksi,$sql);  
+                                        $oke1 = $koneksi->prepare($sql);
+                                        $oke1->execute();
+                                        $result = $oke1->get_result();  
                                         
                                         //pagination config start
                                         $rpp = 20; // jumlah record per halaman
@@ -334,7 +338,9 @@ $sql_lapakpr = "SELECT l.IDLapak, l.BlokLapak, l.NomorLapak, l.Keterangan, l.Ret
 	                                        }
 	                                        
 	                                        $sql .="  GROUP BY b.IDTimbangan ASC";
-	                                        $result = mysqli_query($koneksi,$sql);  
+                                          $oke = $koneksi->prepare($sql);
+                                          $oke->execute();
+	                                        $result = $oke->get_result();  
 	                                        
 	                                        //pagination config start
 	                                        $rpp = 20; // jumlah record per halaman
@@ -415,7 +421,9 @@ $sql_lapakpr = "SELECT l.IDLapak, l.BlokLapak, l.NomorLapak, l.Keterangan, l.Ret
                                         
                                         
                                         $sql .=" GROUP BY d.IDPerson order by d.NamaPerson";
-                                        $result = mysqli_query($koneksi,$sql);  
+                                        $oke2 = $koneksi->prepare($sql);
+                                        $oke2->execute();
+                                        $result = $oke2->get_result();  
                                         
                                         //pagination config start
                                         $rpp = 20; // jumlah record per halaman
