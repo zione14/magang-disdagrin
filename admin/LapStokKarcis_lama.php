@@ -128,7 +128,9 @@ $Tahun=date('Y');
 										}
 										
 										$sql .=" ORDER BY t.TanggalTransaksi ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
@@ -240,7 +242,9 @@ $Tahun=date('Y');
 				}
 	
 			$sql .=" ORDER BY t.TanggalTransaksi ASC";
-			$result = mysqli_query($koneksi,$sql);
+			$oke1 = $koneksi->prepare($sql);
+			$oke1->execute();
+			$result = $oke1->get_result();
 			$data = mysqli_fetch_array($result);
 			return $data['JumlahStok'];
 		} 
