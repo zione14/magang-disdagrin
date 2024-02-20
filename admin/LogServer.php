@@ -128,7 +128,9 @@ $SubPage = 'LogServer';
 								}
 								
 								$sql.=" ORDER BY a.DateTimeLog DESC ";
-								$result = mysqli_query($koneksi,$sql);
+								$oke = $koneksi->prepare($sql);
+								$oke->execute();
+								$result = $oke->get_result();
 								
 								//pagination config start
 								$rpp = 15; // jumlah record per halaman
