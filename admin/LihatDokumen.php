@@ -32,7 +32,12 @@ Title : Crud Menggunakan Modal Bootsrap
 									  <tbody>
 										<?php 
 											$no =1;
-											$sql= @mysqli_query($koneksi, "SELECT FotoTimbangan1,FotoTimbangan2,FotoTimbangan3,FotoTimbangan4 FROM timbanganperson WHERE IDTimbangan='$IDTimbangan'"); 
+											$sqla = "SELECT FotoTimbangan1,FotoTimbangan2,FotoTimbangan3,FotoTimbangan4 FROM timbanganperson WHERE IDTimbangan= ? ";
+											$ab = $IDTimbangan;
+											$oke = $koneksi->prepare($sqla);
+											$oke->bind_param('s', $ab);
+											$oke->execute();
+											$sql= $oke->get_result(); 
 											$datafoto = @mysqli_fetch_array($sql);
 										?>
 										<tr>
