@@ -74,7 +74,9 @@ $SubPage = 'LapTokoDistribusi';
 										FROM mstperson a 
 										join mstperson b on (a.IDPerson=b.ID_Distributor) 
 										where a.JenisPerson LIKE '%PupukSub%'  AND a.IsVerified=b'1' AND b.IDPerson='$id'";
-										$result = mysqli_query($koneksi,$sql);
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();
 										$data = mysqli_fetch_array($result);
 
 								  	?>
