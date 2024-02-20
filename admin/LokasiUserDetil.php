@@ -190,12 +190,16 @@ if(@$_GET['id']==null){
 											$keyword=$_REQUEST['keyword'];
 											$reload = "LokasiUserDetil.php?pagination=true&keyword=$keyword";
 											$sql =  "SELECT b.NamaLokasi,b.AlamatLokasi,b.KodeLokasi,a.NamaPerson,a.IDPerson FROM mstperson a join lokasimilikperson b on a.IDPerson=b.IDPerson WHERE b.NamaLokasi LIKE '%$keyword%' and a.IsVerified=b'1' and a.JenisPerson LIKE '%Timbangan%' and a.IDPerson='$IDPerson' ORDER BY b.KodeLokasi ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$oke = $koneksi->prepare($sql);
+											$oke->execute();
+											$result = $oke->get_result();
 										}else{
 										//jika tidak ada pencarian pakai ini
 											$reload = "LokasiUserDetil.php?pagination=true";
 											$sql =  "SELECT b.NamaLokasi,b.AlamatLokasi,b.KodeLokasi,a.NamaPerson,a.IDPerson FROM mstperson a join lokasimilikperson b on a.IDPerson=b.IDPerson WHERE  a.IsVerified=b'1' and a.JenisPerson LIKE '%Timbangan%' and a.IDPerson='$IDPerson' ORDER BY b.KodeLokasi ASC";
-											@$result = mysqli_query($koneksi,$sql);
+											$oke1 = $koneksi->prepare($sql);
+											$oke1->execute();
+											@$result = $oke1->get_result();
 										}
 										
 										//pagination config start
@@ -440,7 +444,9 @@ if(@$_GET['id']==null){
 		if(isset($_POST['Simpan'])){
 			$Tahun=date('Y');
 			$sql = "SELECT RIGHT(KodeLokasi,8) AS kode FROM lokasimilikperson WHERE KodeLokasi LIKE '%".$Tahun."%' AND IDPerson='$IdPerson' ORDER BY KodeLokasi DESC LIMIT 1";
-			$res = mysqli_query($koneksi, $sql);
+			$oke3 = $koneksi->prepare($sql);
+			$oke3->execute();
+			$res = $oke3->get_result();
 			$result = mysqli_fetch_array($res);
 			if ($result['kode'] == null) {
 				$kode = 1;
