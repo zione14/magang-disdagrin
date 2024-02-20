@@ -243,7 +243,9 @@
 		
 	 function NamaPerson($koneksi, $IDPerson){
 		$query = "SELECT NamaPerson FROM mstperson where IDPerson='$IDPerson'";
-		$conn = mysqli_query($koneksi, $query);
+		$oke = $koneksi->prepare($query);
+		$oke->execute();
+		$conn = $oke->get_result();
 		$result = mysqli_fetch_array($conn);
 		$NamaPerson = $result['NamaPerson'];
 		
