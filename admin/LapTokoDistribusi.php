@@ -82,7 +82,10 @@ $SubPage = 'LapTokoDistribusi';
 											<select id="IDPerson" name="IDPerson" class="form-control">	
 											<?php
 												echo "<option value=''>--- Semua Distributor ---</option>";
-												$menu = mysqli_query($koneksi,"SELECT IDPerson,NamaPerson FROM mstperson where JenisPerson LIKE '%PupukSub%'  AND IsVerified=b'1' and IsPerusahaan=b'1' AND ID_Distributor IS NULL ORDER BY NamaPerson");
+												$sqla = "SELECT IDPerson,NamaPerson FROM mstperson where JenisPerson LIKE '%PupukSub%'  AND IsVerified=b'1' and IsPerusahaan=b'1' AND ID_Distributor IS NULL ORDER BY NamaPerson";
+												$oke = $koneksi->prepare($sqla);
+												$oke->execute();
+												$menu = $oke->get_result();
 												while($kode = mysqli_fetch_array($menu)){
 													if($kode['IDPerson']==$_REQUEST['IDPerson']){
 														echo "<option value=\"".$kode['IDPerson']."\" selected>".$kode['NamaPerson']."</option>\n";
@@ -128,7 +131,9 @@ $SubPage = 'LapTokoDistribusi';
 										}
 										
 										$sql .="  ORDER BY b.NamaPerson ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke1 = $koneksi->prepare($sql);
+										$oke1->execute();
+										$result = $oke1->get_result();
 									
 										
 										//pagination config start
@@ -459,8 +464,11 @@ $SubPage = 'LapTokoDistribusi';
 		
 	}
 	function NamaPerson($koneksi, $IDPerson){
-		$query = "SELECT NamaPerson FROM mstperson where IDPerson='$IDPerson'";
-		$conn = mysqli_query($koneksi, $query);
+		$query = "SELECT NamaPerson FROM mstperson where IDPerson= ? ";
+		$oke2 = $koneksi->prepare($query);
+		$oke2->bind_param('s', $IDPerson);
+		$oke2->execute();
+		$conn = $oke2->get_result();
 		$result = mysqli_fetch_array($conn);
 		$NamaPerson = $result['NamaPerson'];
 		
