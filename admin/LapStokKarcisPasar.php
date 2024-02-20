@@ -97,7 +97,9 @@ while ($row_p = $res_p->fetch_assoc()) {
 										$sql =  "SELECT p.NamaPasar, p.KodePasar
 										FROM mstpasar p
 										ORDER BY p.NamaPasar ASC";
-										$result = mysqli_query($koneksi,$sql);
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();
 										
 										//pagination config start
 										$rpp = 15; // jumlah record per halaman
@@ -141,7 +143,9 @@ while ($row_p = $res_p->fetch_assoc()) {
 												) c ON c.KodePasar = t.KodePasar AND c.KodeKB = d.KodeKB
 												WHERE t.TipeTransaksi='PENGIRIMAN' AND t.KodePasar='".$data['KodePasar']."' AND d.KodeKB='".$krc['KodeKB']."'  
 												GROUP by t.KodePasar, d.KodeKB";
-												$row = mysqli_query($koneksi, $query);
+												$oke = $koneksi->prepare($query);
+												$oke->execute();
+												$row = $oke->get_result();
 												$res = mysqli_fetch_assoc($row); 
 												?>
 
@@ -175,7 +179,9 @@ while ($row_p = $res_p->fetch_assoc()) {
 												) c ON c.KodePasar = t.KodePasar AND c.KodeKB = d.KodeKB
 												WHERE t.TipeTransaksi='PENGIRIMAN' AND d.KodeKB='".$krc['KodeKB']."'  
 												GROUP by t.KodePasar, d.KodeKB";
-												$row1 = mysqli_query($koneksi, $query1);
+												$oke1 = $koneksi->prepare($query1);
+												$oke1->execute();
+												$row1 = $oke1->get_result();
 												$res1 = mysqli_fetch_assoc($row1); 
 
 												echo  isset($res1['StokRequest']) ? '<td class="text-right">'.$res1['StokRequest'].'</td>' : '<td class="text-right">0</td>' ;
@@ -198,7 +204,9 @@ while ($row_p = $res_p->fetch_assoc()) {
 												) c ON c.KodePasar = t.KodePasar AND c.KodeKB = d.KodeKB
 												WHERE t.TipeTransaksi='PENGIRIMAN' AND d.KodeKB='".$krc['KodeKB']."'  
 												GROUP by t.KodePasar, d.KodeKB";
-												$row2 = mysqli_query($koneksi, $query2);
+												$oke2 = $koneksi->prepare($query2);
+												$oke2->execute();
+												$row2 = $oke2->get_result();
 												$res2 = mysqli_fetch_assoc($row2); 
 
 												echo  isset($res2['StokRequest']) ? '<td class="text-right">'.number_format($res2['StokRequest']*$krc['NilaiKB']).'</td>' : '<td class="text-right">0</td>';
