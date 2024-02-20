@@ -639,8 +639,11 @@ if(@$_GET['id']==null){
 		
 		if(isset($_POST['Simpan'])){		
 			$Tahun=date('Y');
-			$sql = "SELECT RIGHT(KodeLokasi,8) AS kode FROM lokasimilikperson WHERE KodeLokasi LIKE '%".$Tahun."%' AND IDPerson='$IdPerson' ORDER BY KodeLokasi DESC LIMIT 1";
-			$res = mysqli_query($koneksi, $sql);
+			$sql = "SELECT RIGHT(KodeLokasi,8) AS kode FROM lokasimilikperson WHERE KodeLokasi LIKE ? AND IDPerson= ? ORDER BY KodeLokasi DESC LIMIT 1";
+			$oke = $koneksi->prepare($sql);
+			$oke->bind_param('ss', $Tahun, $IdPerson);
+			$oke->execute();
+			$res = $oke->get_result();
 			$result = mysqli_fetch_array($res);
 			if ($result['kode'] == null) {
 				$kode = 1;
@@ -833,8 +836,11 @@ if(@$_GET['id']==null){
 	}
 	
 	function NamaPerson($koneksi, $IDPerson){
-		$query = "SELECT NamaPerson FROM mstperson where IDPerson='$IDPerson'";
-		$conn = mysqli_query($koneksi, $query);
+		$query = "SELECT NamaPerson FROM mstperson where IDPerson=?";
+		$oke1 = $koneksi->prepare($query);
+		$oke1->bind_param('s', $IDPerson);
+		$oke1->execute();
+		$conn = $oke1->get_result();
 		$result = mysqli_fetch_array($conn);
 		$NamaPerson = $result['NamaPerson'];
 		
