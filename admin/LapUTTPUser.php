@@ -162,8 +162,9 @@ $SubPage = 'LapUTTPUser';
 										}
 
 										$q .=" GROUP by c.IDTimbangan order by a.IDPerson ASC";
-
-										$result = mysqli_query($koneksi,$q);
+										$oke = $koneksi->prepare($q);
+										$oke->execute();
+										$result = $oke->get_result($koneksi,$q);
 										
 										$no_urut=0;
 										//pagination config start
