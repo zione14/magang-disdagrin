@@ -136,7 +136,9 @@ $NamaBulan = array (1 =>   'Januari',
 										}
 																				
 										$sql .="  ORDER BY b.NamaPasar, d.NamaPerson ASC";
-										$result = mysqli_query($koneksi,$sql);	
+										$oke = $koneksi->prepare($sql);
+										$oke->execute();
+										$result = $oke->get_result();	
 										
 																				
 										//pagination config start
@@ -167,8 +169,14 @@ $NamaBulan = array (1 =>   'Januari',
 											</td>
 											<td width="20%" align="left">
 												<?php 
-												$query ="SELECT TanggalTrans,NominalRetribusi from trretribusipasar where IDPerson='".$data['IDPerson']."' and KodePasar='".$data['KodePasar']."' and IDLapak='".$data['IDLapak']."' order by TanggalTrans DESC Limit 1"; 
-												$res =mysqli_query($koneksi, $query);
+												$query ="SELECT TanggalTrans,NominalRetribusi from trretribusipasar where IDPerson= ? and KodePasar= ? and IDLapak= ? order by TanggalTrans DESC Limit 1"; 
+												$ab = $data['IDPerson'];
+												$ac = $data['KodePasar'];
+												$ad = $data['IDLapak'];
+												$oke = $koneksi->prepare($query);
+												$oke->bind_param('sss', $ab, $ac, $ad);
+												$oke->execute();
+												$res = $oke->get_result();
 												$result1 =mysqli_fetch_array($res);
 												$datetime1 = new DateTime($result1[0]);
 												$datetime2 = new DateTime($Tanggal);
