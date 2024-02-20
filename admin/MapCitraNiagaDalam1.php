@@ -26,7 +26,9 @@ FROM trretribusipasar t
 GROUP BY t.KodePasar, t.IDLapak, t.IDLapak
 ) d ON d.KodePasar = l.KodePasar AND d.IDLapak = l.IDLapak AND d.IDLapak = c.IDLapak
 WHERE l.KodePasar='$KodePasar' ORDER BY IDLapak ASC";
-$res_lapak = $koneksi->query($sql_lapak);
+$oke = $koneksi->prepare($sql_lapak);
+$oke->execute();
+$res_lapak = $oke->get_result();
 $data_lapak = array();
 while ($row_lapak = $res_lapak->fetch_assoc()) {
  array_push($data_lapak, $row_lapak);
