@@ -95,12 +95,16 @@ $SubPage = 'Lokasi';
 											$keyword=$_REQUEST['keyword'];
 											$reload = "LokasiUser.php?pagination=true&keyword=$keyword";
 											$sql =  "SELECT NamaPerson,AlamatLengkapPerson,JenisPerson,IDPerson FROM mstperson where  NamaPerson LIKE '%$keyword%' and IsVerified=b'1' and JenisPerson LIKE '%Timbangan%' and UserName != 'dinas' ORDER BY NamaPerson ASC";
-											$result = mysqli_query($koneksi,$sql);
+											$oke = $koneksi->prepare($sql);
+											$oke->execute();
+											$result = $oke->get_result();
 										}else{
 										//jika tidak ada pencarian pakai ini
 											$reload = "LokasiUser.php?pagination=true";
 											$sql =  "SELECT NamaPerson,AlamatLengkapPerson,JenisPerson,IDPerson,PJPerson FROM mstperson where IsVerified=b'1' and JenisPerson LIKE '%Timbangan%' and UserName != 'dinas' ORDER BY NamaPerson ASC";
-											@$result = mysqli_query($koneksi,$sql);
+											$oke1 = $koneksi->prepare($sql);
+											$oke1->execute();
+											@$result = $oke1->get_result();
 										}
 										
 										//pagination config start
